@@ -1,0 +1,31 @@
+<!doctype html>
+
+<head>
+	<title>Lance | Admin Miscellaneous</title>
+	<%= include ../partials/header.ejs %>
+	<link rel="stylesheet" href="/css/admin.css" type="text/css">
+</head>
+
+<body>
+	<%= include sidebar.ejs %>
+	<div class="tab-content">
+		
+		<h3>Miscellaneous Settings</h3>
+		<p>Global info editing. Sponsors still need to be added manually.</p>
+		<div class="info-list">
+			<form method="post" action="/updateinfo" name="infouser-form" id="infouser-form">
+				<div class="info"><div class="field">Name </div><input class="name" name="name" type="text" value="<%= eventInfo.name %>" autocomplete="off"></div>
+				<div class="info"><div class="field">Date </div><input class="date" name="date" type="text" value="<%= eventInfo.date %>" autocomplete="off"></div>
+				<div class="info"><div class="field">Location </div><input class="location" name="location" type="text" value="<%= eventInfo.location %>" autocomplete="off"></div>
+				<div class="info"><div class="field">About </div><input class="about" name="about" type="text" value="<%= eventInfo.about %>" autocomplete="off"></div>
+				<div class="info"><div class="field">Pre-Login </div><input class="intro" name="intro" type="text" value="<%= eventInfo.intro %>" autocomplete="off"></div>
+				<div class="info"><div class="field">Logo </div><input class="logo" name="logo" type="text" value="<%= eventInfo.logo %>" autocomplete="off"></div>
+				<br>
+				<button class="btn btn-danger button" type="submit">Update</button>
+			</form>                       
+		</div>           
+	</div>
+</body>
+<%= include ../partials/footer.ejs %>
+
+</html>

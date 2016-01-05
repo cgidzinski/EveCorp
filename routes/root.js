@@ -1,5 +1,10 @@
 var User = require('../models/user');
 
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) return next();
+  res.redirect('/');
+}
+
 module.exports = function(app, passport, io) {
 
     // =============================================================================
@@ -8,29 +13,28 @@ module.exports = function(app, passport, io) {
     app.get('/', function(req, res) {
           res.render('index.ejs');
     });
-    app.get('/login', function(req, res) {
-          res.render('login.ejs');
+
+    app.get('/dashboard',isLoggedIn, function(req, res) {
+      res.render('dashboard/dashboard.ejs', {
+      user: req.user
     });
-    app.get('/signup', function(req, res) {
-          res.render('signup.ejs');
-    });
-    app.get('/pass', function(req, res) {
-      console.log(req.user);
-          res.render('pass.ejs');
-    });
-    app.get('/fail', function(req, res) {
-          res.render('fail.ejs');
     });
 
-    app.get('/auth/eveonline',passport.authenticate('eveonline'));
+
+    app.get('/login',passport.authenticate('eveonline'));
 
 app.get('/auth/eveonline/callback',passport.authenticate('eveonline', {
-    successRedirect: '/pass',
-    failureRedirect: '/fail'
+    successRedirect: '/dashboard',
+    failureRedirect: '/'
   })
 );
 
+ app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+  });
+
 app.get('*', function(req, res){
-   res.send('ayyy bb, u seem lost', 404);
+   res.send("Jita's that way", 404);
  });          
 }

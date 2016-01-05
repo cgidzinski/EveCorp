@@ -1,0 +1,143 @@
+<!doctype html>
+
+<head>
+    <title>Lance | Admin User Management</title>
+    <%= include ../partials/header.ejs %>
+    <link rel="stylesheet" href="/css/admin.css" type="text/css">
+</head>
+
+<body>
+<%= include sidebar.ejs %>
+<div class="tab-content">
+          <h3>User Management</h3>
+          <p>Select a user to edit their info, or select New User to add a local user without a ticket.</p>
+          <p>Total User: <%=userList.length%></p>
+         <button type="button" data-toggle="modal" data-target="#userModal" data-id="New User" class="btn btn-default button" style="align:right;">New User</button><br><br>
+
+<% for(var i=0; i < userList.length; i++) { %>
+ <a data-toggle="modal" href="#userModal" 
+data-id="<%=userList[i]._id%>" 
+data-key="<%=userList[i].local.key%>"
+data-name="<%=userList[i].local.name%>" 
+data-ban="<%=userList[i].local.ban%>" 
+data-tag="<%=userList[i].local.tag%>" 
+data-email="<%=userList[i].local.email%>"
+data-gamertag="<%=userList[i].local.gamertag%>" 
+data-bio="<%=userList[i].local.bio%>"
+data-hiddeninfo="<%=userList[i].local.hiddenInfo%>" 
+data-group="<%=userList[i].local.group%>"
+data-games="<%=userList[i].local.games%>" 
+  >
+  <div class="info-list">
+  <div class="info"><div class="field <%= userList[i].local.group %>"><%= userList[i].local.group %></div><div class="select">
+  <span><%= userList[i].local.name %></span><span><%= userList[i].local.gamertag %></span><span><%= userList[i].local.email %></span></div></div></a> 
+    <% } %>
+</div>
+</div>
+</body>
+
+
+
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="userModalLabel">Edit User </h4>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+            <!-- PROFILE INFORMATION -->
+            <div class="col-sm-12">
+              <div class="profile-info">
+          <form method="post" action="/updateuser" name="adminuser-form" id="adminuser-form">
+
+          <div class="info"><div class="field">ID </div><input class="id readonly" name="id" type="text" autocomplete="off" readonly></div>
+          <div class="info"><div class="field">New Password </div><input class="password" name="password" type="password" autocomplete="off" placeholder="Keep Blank If Unchanged"></div>    
+          <div class="info"><div class="field">Group </div>
+          <select id="group" name="group">
+          <option value="user">user</option>
+          <option value="volunteer">volunteer</option>
+          <option value="staff">staff</option>
+          <option value="admin">admin</option>
+          </select>
+          </div>
+          <div class="info"><div class="field">Ban </div>
+          <select id="ban" name="ban">
+          <option value="false">false</option>
+          <option value="true">true</option>
+          </select>
+          </div>
+          <div class="info"><div class="field">Delete</div><input class="delconf" name="delconf" type="text" autocomplete="off" placeholder="Paste User ID Here to Confirm"></div>
+          <hr>
+
+          <div class="info"><div class="field">Name </div><input class="name" name="name" type="text" autocomplete="off" placeholder="Required" required="true"></div>
+          <div class="info"><div class="field">Email </div><input class="email" name="email" type="text" autocomplete="off" placeholder="Required" required="true"></div>
+          <div class="info"><div class="field">Gamertag </div><input class="gamertag" name="gamertag" type="text" autocomplete="off"></div>
+          <div class="info"><div class="field">Bio </div><input class="bio" name="bio" type="text" autocomplete="off"></div>
+          <div class="info"><div class="field">Tag </div><input class="tag" name="tag" type="text" autocomplete="off"></div>
+          <div class="info"><div class="field">Games </div><input class="games" name="games" type="text" autocomplete="off"></div>
+          <div class="info"><div class="field">Hidden Info </div><input class="hiddeninfo" name="hiddeninfo" type="text" autocomplete="off"></div>
+          <hr>
+          <div class="info" ><div class="field">Key</div><input class="key" name="key" type="text" autocomplete="off"></div> 
+           </div>       
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-danger update-submit button">Update</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$('#userModal').on('show.bs.modal', function (event) {
+var button = $(event.relatedTarget); 
+var name = button.data('name');
+var id = button.data('id');
+var key = button.data('key');
+var ban = button.data('ban');
+var tag = button.data('tag');
+var email = button.data('email');
+var gamertag = button.data('gamertag');
+var bio = button.data('bio');
+var hiddeninfo = button.data('hiddeninfo');
+var group = button.data('group');
+var games = button.data('games');
+
+
+  var modal = $(this);
+  if (id == "New User"){  
+    modal.find('.modal-title').text('New User');
+    modal.find('.delconf').prop("readonly",true);
+    modal.find('.delconf').val("");
+  }
+  else {  
+    modal.find('.modal-title').text('Edit User - ' + name);
+    modal.find('.delconf').prop("readonly",false);
+  }
+  modal.find('.name').val(name);
+  modal.find('.id').val(id);
+  modal.find('.key').val(key);
+  if (ban == true){$("#ban").val("true");}else{$("#ban").val("false");}
+  modal.find('.tag').val(tag);
+  modal.find('.email').val(email);
+  modal.find('.gamertag').val(gamertag);
+  modal.find('.bio').val(bio);
+  modal.find('.hiddeninfo').val(hiddeninfo);
+   if (group == "user"){$("#group").val("user");}
+   if (group == "volunteer"){$("#group").val("volunteer");}
+   if (group == "staff"){$("#group").val("staff");}
+   if (group == "admin"){$("#group").val("admin");}
+  modal.find('.games').val(games);
+})
+
+</script>
+<%= include ../partials/footer.ejs %>
+    </html>

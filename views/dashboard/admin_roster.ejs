@@ -1,0 +1,66 @@
+<!doctype html>
+
+<head>
+    <title>Lance | Admin Panel</title>
+    <%= include ../partials/header.ejs %>
+    <link rel="stylesheet" href="/css/admin.css" type="text/css">
+</head>
+
+<body>
+<%= include sidebar.ejs %>
+                    <div class="tab-content">
+               
+                            <h3>Edit Roster - <%= eventInfo.name %> </h3>
+                            <div class="info-list">
+                                <div class="well">
+                              <h3 class="red">Add Slot</h3>
+                    <form method="post" action="/roster/addslot" name="roster-form" id="roster-form">
+                    <div class="info extended"><div class="field">Event ID</div><input class="eventID" name="eventID" type="text" autocomplete="off" value="<%= eventInfo._id %>"></div>
+                    <div class="info extended"><div class="field">Name</div><input class="name" name="name" type="text" autocomplete="off"></div>
+                    <div class="info extended"><div class="field">Password</div><input class="password" name="password" type="text" autocomplete="off"></div>
+                    <button class="btn btn-danger update-submit button">Add</button>
+                    </form>
+                        <h3 class="red">Remove Slot</h3>
+                    <form method="post" action="/roster/removeslot" name="roster-form" id="roster-form">
+                    <div class="info extended"><div class="field">Event ID</div><input class="eventID" name="eventID" type="text" autocomplete="off" value="<%= eventInfo._id %>"></div>
+                    <div class="info extended"><div class="field">Slot ID</div><input class="slotID" name="slotID" type="text" autocomplete="off"></div>
+                    <button class="btn btn-danger update-submit button">Remove</button>
+                    </form>
+                </div>
+
+                               <% for(var i=0; i < eventInfo.teams.length; i++) { %>
+
+                    <div class="well">
+                    <h2 class="red">Team: <%= eventInfo.teams[i].name %> - <%= eventInfo.teams[i]._id %></h2>
+                    <p class="red">
+                    <% for(var x=0; x < eventInfo.teams[i].players.length; x++) { %>
+                    [<%= eventInfo.teams[i].players[x][1] %>] <%= eventInfo.teams[i].players[x][2] %> - <%= eventInfo.teams[i].players[x][0] %>
+                    <br>
+                    <% }%>
+                    </p>
+                    <form method="post" action="/roster/addplayer" name="roster-form" id="roster-form">
+                      <div class="info extended"><div class="field">Event ID</div><input class="eventID" name="eventID" type="text" autocomplete="off" value="<%= eventInfo._id %>"></div>
+                      <div class="info extended"><div class="field">Slot ID</div><input class="slotID" name="slotID" type="text" autocomplete="off" value="<%= eventInfo.teams[i]._id %>"></div>
+                    <div class="info extended"><div class="field">Player ID</div><input class="playerID" name="playerID" type="text" autocomplete="off"></div>
+                    <button class="btn btn-danger update-submit button">Add</button>
+                    </form>
+                    
+                    <br>
+                    <form method="post" action="/roster/removeplayer" name="roster-form" id="roster-form">
+                      <div class="info extended"><div class="field">Event ID</div><input class="eventID" name="eventID" type="text" autocomplete="off" value="<%= eventInfo._id %>"></div>
+                      <div class="info extended"><div class="field">Slot ID</div><input class="slotID" name="slotID" type="text" autocomplete="off" value="<%= eventInfo.teams[i]._id %>"></div>
+                    <div class="info extended"><div class="field">Player ID</div><input class="playerID" name="playerID" type="text" autocomplete="off"></div>
+                    <button class="btn btn-danger update-submit button">Remove</button>
+                    </form>
+</div>
+
+
+<hr>
+                        <% }%>
+          					</div>
+                    </div>
+            
+</body>
+<%= include ../partials/footer.ejs %>
+
+    </html>

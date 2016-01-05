@@ -40,6 +40,8 @@ User.findOne({CharacterID:profile._json.CharacterID}, function(err, user) {
     if (user)
     {
         console.log("found"); 
+        user.accessToken = accessToken;
+        user.save();
         return done(null, user);
     }
         else
@@ -48,6 +50,7 @@ User.findOne({CharacterID:profile._json.CharacterID}, function(err, user) {
             var user = new User();
         user.CharacterName = profile._json.CharacterName;
         user.CharacterID = profile._json.CharacterID;
+        user.accessToken = accessToken;
         user.save();
             return done(null, user);
     }
