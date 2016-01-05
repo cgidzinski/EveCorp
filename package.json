@@ -9,7 +9,7 @@
     "passport-local" : "~0.1.6",
     "passport-facebook" : "~1.0.2",
     "passport-twitter" : "~1.0.2",
-    "passport-eveonline": "*",
+    "passport-eve-oauth": "*",
     "passport-google-oauth" : "~0.1.5",
     "bson" : "~0.2.22",
     "connect-flash" : "~0.1.1",
