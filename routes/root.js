@@ -15,6 +15,7 @@ module.exports = function(app, passport, io) {
           res.render('signup.ejs');
     });
     app.get('/pass', function(req, res) {
+      console.log(req.user);
           res.render('pass.ejs');
     });
     app.get('/fail', function(req, res) {
