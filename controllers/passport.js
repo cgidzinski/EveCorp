@@ -30,8 +30,11 @@ passport.deserializeUser(function(id, done) {
    passport.use('eveonline', new EveOnlineStrategy({
     clientID: "a6d649dbe7724629af5900aa20c186f4",
     clientSecret: "6dutMnDMCGvAAWGGbFacQ7u3pEenBDD1VZjxlI9I",
-     callbackURL: "http://localhost:8081/auth/eveonline/callback",
-     userAgent: 'http://localhost:8081/'
+     callbackURL: "http://lan-ce.com/auth/eveonline/callback",
+     userAgent: 'http://lan-ce.com/'
+
+     // callbackURL: "http://localhost:8081/auth/eveonline/callback",
+     // userAgent: 'http://localhost:8081/'
     },
       function(accessToken, refreshToken, profile, done) {
 
