@@ -1,0 +1,74 @@
+body{
+	padding-top:50px;
+	background:#ddd;
+}
+.navbar{
+	margin:0;
+}
+#admin-sidebar{
+	width:220px;
+	height:100%;
+	float:left;
+	padding:0;
+}
+#admin-sidebar li{
+	list-style: none;
+	display:block;
+	padding:10px;
+	font-weight:bold;
+}
+#admin-sidebar a .active{
+	background-color:#fff;
+	color:#222;
+}
+#admin-sidebar a {
+	color:#222;
+	text-decoration: none;
+}
+#admin-sidebar li:hover{
+	background-color:#efefef;
+	color:#222;
+}
+.tab-pane {
+	background:none;
+}
+.info-list{
+	max-width:1280px;
+	min-width:500px;
+}
+.tab-content{
+	width: calc(100% - 220px);
+	padding:0 20px;
+	height:calc(100vh - 90px);
+	overflow-y:scroll;
+	float:left;
+	background:#444;
+	color:#eee;
+}
+.tab-content p {
+	margin-top:0;
+}
+.tab-content>.active {
+    display: inline;
+}
+.tab-content h3 {
+	letter-spacing:1px;
+	margin:20px 0;
+	display:inline-block;
+	background:none;
+}
+.tab-content .header {
+	margin: 0 0 20px 0;
+	max-width:1280px;
+	min-width:500px;
+	text-align: right
+}
+.tab-content .header button {
+	font-weight:bold;
+	display:inline-block;
+}
+.tab-content .header span {
+	display:inline-block;
+	width:calc(100% - 90px);
+	text-align:left;
+}

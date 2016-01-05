@@ -1,0 +1,259 @@
+<div id="chat-footer">
+
+<script type="text/javascript">
+//footer toggle
+function disableAnimation(){
+	$("#chat-footer").removeClass("anim");
+}
+function channel(channel){
+  $('#twitch').attr('src', "http://player.twitch.tv/?channel="+channel);
+  console.log(channel);
+}
+$(document).ready(function () {
+
+    var chat = true;
+    getNotifications();
+
+    function getNotifications(){
+      var time;
+      $.getJSON('/api/notifications', function(data) {
+        for(var i = data.length-1; i > -1; i--){
+          time = (data[i].time);
+
+          $('ul.notifications').append("<li><span>[ "+time+" ]</span> "+data[i].text+"</li>");
+        }
+        $('#latest-notif'). append(data[data.length-1].text);
+        
+        //$('ul.notifications').append("<li>test2</li>");
+      });
+    }
+    $('#notif').click( function(){
+      if(chat){
+        $('#right').hide();
+        $('#chat-controls').hide();
+        $('#notifications').show();
+        chat = false;    
+        $('#notif').text("Return to Chat");   
+      } else {
+        $('#right').show();
+        $('#chat-controls').show();
+        $('#notifications').hide();
+        $('#notif').text("Notifications Log");
+        chat = true;        
+      }
+
+    });
+
+    $('#footer-bar').click( function(){
+    	$("#chat-footer").addClass("anim"); 
+      $("body").toggleClass("lock");
+      $('#m').focus();
+    	$("#footer-toggle").toggleClass("rotate"); // rotate icon 180deg
+    	$("#chat-footer").toggleClass("expand"); // expand footer
+    	setTimeout(disableAnimation, 400); // disable animations as soon as animation ends
+    });
+
+    $('.room').click(function (e) {
+        e.preventDefault();
+        $(this).closest('.room').addClass('active').siblings().removeClass('active');
+    });
+
+});
+</script>
+
+	<div id="footer-bar">
+  <div id="notification-bar">
+    <div style="float:left; margin:6px 20px">
+      <h5 id="latest-notif">
+        <!--most recent notification will go here... -->
+      </h5>
+    </div>
+  </div>
+  <span style="float:right" id="footer-toggle" class="glyphicon glyphicon-chevron-up white"></span>
+		<div style="float:right; margin-top:6px; cursor:default">
+			<h5>
+			Chat + Notifications
+			</h5>
+		</div>
+        
+    </div>
+    <div id="left">
+      <div id="notif" class="button">
+      Notifications Log
+      </div>
+      <div id="chat-controls">
+        <div id="room-selection">
+          <div class="room button shadow active" onclick="switchRooms('Lobby')">Lobby</div>
+          <div class="room button shadow" onclick="switchRooms('League of Legends')">League of Legends</div>
+          <div class="room button shadow" onclick="switchRooms('CS:GO')">CS:GO</div>
+          <div class="room button shadow" onclick="switchRooms('DOTA 2')">DOTA 2</div>
+          <div class="room button shadow" onclick="switchRooms('Super Smash Bros')">Smash</div>
+          <div class="room button shadow" onclick="switchRooms('Rocket League')">Rocket League</div>
+          <div class="room button shadow" onclick="switchRooms('Hearthstone')">Hearthstone</div>
+          <div class="room button shadow" onclick="switchRooms('Starcraft')">Starcraft</div>
+          <div class="room button shadow" onclick="switchRooms('Mario Kart')">Mario Kart</div>
+          <div class="room button shadow" onclick="switchRooms('Anime')">Anime</div>
+          <div class="room button shadow" onclick="switchRooms('Minecraft')">Minecraft</div>
+          <div class="room button shadow" onclick="switchRooms('MMORPGs')">MMORPGs</div>
+          <div class="room button shadow" onclick="switchRooms('Registration')">Registration</div>
+          <div class="room button shadow" onclick="switchRooms('Help / Support')">Help / Support</div>
+          <form action="" name="custom-room" id="custom-room">
+          </form>
+          <% if(user.local.group == "admin" || user.local.group == "staff"){ %>
+          <div class="room button shadow hiddenroom" style="width: 100%;"onclick="switchRooms('Administration')">Staff Chat</div>
+          <% }%>
+        </div>
+      </div>
+	</div>
+    <div id="notifications">
+    <ul class="notifications">
+
+    </ul>
+    </div>
+    <div id="right">
+	    <ul id="messages"></ul>
+
+	    <form action="" name="chat" id="socket-form">
+	      <input type="text" id="m" autocomplete="off" name="chat"/>
+	      <button type="submit">Send</button>
+	    </form>
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var div = document.getElementById('messages');
+  var log = [];
+  // load previous chat messages ////////////////////////////////////////
+  if(JSON.parse(sessionStorage.getItem('log')) == null){
+    // check for null
+  }
+  else {
+    var load = JSON.parse(sessionStorage.getItem('log'));
+    for(var i = 0; i < load.length; i++){
+      log.push(load[i]);
+    }
+    console.log(load);
+    $('#messages').append(load);
+    scrollToBottom('right');
+  }
+
+  var currentRoom = "Lobby";
+  roomInfo();
+  var socket = io();
+  $('#socket-form').submit(function(){
+    socket.emit('chatmessage',{user: "<%= user.local.gamertag %>",id: "<%= user._id %>", group: "<%= user.local.group %>", text: $('#m').val()});
+    $('#m').val('');
+    return false;
+  });
+
+  socket.on('chatmessage', function(msg){
+    var filteredText = removeTags(msg.text).trim();
+    if(filteredText.length == 0){
+      // empty strings
+    } else {
+      var chatmsg = "<li><a href='/profile/"+msg.id+"' class='"+msg.group+"'>"+msg.user+"</a><span>"+ filteredText+ "</span></li>";
+     $('#messages').append(chatmsg);
+
+     log.push(chatmsg);
+
+     sessionStorage.setItem('log', JSON.stringify(log));
+      //var size = div.lastChild.offsetWidth - (div.lastChild.firstChild.offsetWidth + 60);
+      var size = div.lastChild.firstChild.offsetWidth + 20;
+      div.lastChild.getElementsByTagName('span')[0].style.width = "calc(100% - +"+size+"px)";
+      //console.log(div.lastChild.getElementsByTagName('span')[0]);
+      div.lastChild.firstChild.offsetWidth;
+
+        if($('#messages li').length > 100){
+            div.removeChild(div.firstChild);
+            log.shift();
+        }
+     scrollToBottom('right');
+   }
+  });
+
+  function switchRooms(room){
+    if(!(currentRoom == room)){
+
+      var chatmsg = "<li><span class=\"switchmsg\">Switched to: <div class=\"white inline\">"+room+"</div></span></li>";
+      // room switch notification
+      $('#messages').append(chatmsg);
+      log.push(chatmsg);
+      sessionStorage.setItem('log', JSON.stringify(log));
+      socket.emit('switchRoom', room);
+    }
+    currentRoom = room;
+    roomInfo();
+    scrollToBottom('right');
+  }
+  function clearLog(){
+    console.log("cleared message log");
+    sessionStorage.clear();
+    log = [];
+    while(div.firstChild){
+      div.removeChild(div.firstChild);
+    }
+  }
+
+  function roomInfo(){
+    var room = $('#current-room');
+    room.text(currentRoom);
+  }
+
+var tagBody = '(?:[^"\'>]|"[^"]*"|\'[^\']*\')*';
+
+var tagOrComment = new RegExp(
+    '<(?:'
+    // Comment body.
+    + '!--(?:(?:-*[^->])*--+|-?)'
+    // Special "raw text" elements whose content should be elided.
+    + '|script\\b' + tagBody + '>[\\s\\S]*?</script\\s*'
+    + '|style\\b' + tagBody + '>[\\s\\S]*?</style\\s*'
+    // Regular name
+    + '|/?[a-z]'
+    + tagBody
+    + ')>',
+    'gi');
+
+
+
+function removeTags(html) {
+  var oldHtml;
+  do {
+    oldHtml = html;
+    html = html.replace(tagOrComment, '');
+  } while (html !== oldHtml);
+  var prefilter = html.replace(/</g, '&lt;');
+  var filter = funFilter(profanityFilter(prefilter));
+  return filter;
+
+}
+
+
+
+        function profanityFilter(str) { 
+      var filterWords = ("anal anus arse ass ballsack balls bastard bitch biatch blowjob bollock bollok boner boob bugger butt buttplug clitoris cock coon cunt dick dildo dyke fag feck fellate fellatio felching fuck fudgepacker fudge packer flange homo jerk jizz knobend knob labia lmfao muff nigger nigga omg penis piss poop prick pube pussy queer scrotum sex shit sh1t slut smegma spunk tit tosser turd twat vagina wank whore hitler").split(" ");
+        var rgx = new RegExp(filterWords.join("|"), "gi");
+                return str.replace(rgx, "****");          
+        }
+
+     function funFilter(str) { 
+        str = str.replace("john cena","JOHN CENAAAA DU DU DU DU DU");
+        str = str.replace("evg31337","The Almighty Admin EVG31337");
+        str = str.replace("lyninx","ASTHETIC Ambassador Lyninx");
+        str = str.replace("salt","<img src='http://i.imgur.com/YX6ZTJ2.gif' width='200' height = '200'>");
+        str = str.replace("snoop","<img src='http://new1.fjcdn.com/thumbnails/comments/This+_5d0478549cb03b3a78ff606c2003f6fe.gif' width='200' height = '200'>");
+        str = str.replace("hl3","<img src='http://www.thebore.com/forum/Smileys/default/gaben.png' width='50' height = '50'>");
+        str = str.replace("half life 3","<img src='http://www.thebore.com/forum/Smileys/default/gaben.png' width='50' height = '50'>");
+        str = str.replace("more more more","<iframe width='420' height='315'src='http://www.youtube.com/embed/hVZKJt4WzxM?autoplay=1'></iframe> ");
+        str = str.replace("cenatime","<iframe width='420' height='315'src='http://www.youtube.com/embed/5LitDGyxFh4?autoplay=1'></iframe> ");
+          return str;        
+        }
+ 
+
+
+function scrollToBottom(elm_id) {
+    var elm = document.getElementById(elm_id);
+    elm.scrollTop = elm.scrollHeight;
+}
+</script>
