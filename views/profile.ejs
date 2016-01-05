@@ -1,0 +1,34 @@
+<!doctype html>
+
+<head>
+    <title>Eve Corporation Manager | Profile</title>
+    <%= include /partials/header.ejs %>
+    <link rel="stylesheet" href="/css/admin.css" type="text/css">
+</head>
+<body>
+<%= include /partials/sidebar.ejs %>
+                    <div class="tab-content"><br>
+             <h2>[ <%= user.CharacterName %> ]</h2>
+<img src="https://image.eveonline.com/Character/<%= user.CharacterID %>_512.jpg"><br>
+<h3>[Alliance]</h3><br>
+<img src="https://image.eveonline.com/Alliance/<%= user.CharacterAllianceID %>_128.png"><%= user.CharacterAlliance %><br>
+<h3>[Corporation]</h3><br>
+<img src="https://image.eveonline.com/Corporation/<%= user.CharacterCorporationID %>_128.png"><%= user.CharacterCorporation %>
+
+                       <div class="profile">
+                        <div class="info"><div class="field">Database ID</div><input class="name" name="name" type="text" value="<%= user._id %>" readonly></div>
+                        <div class="info"><div class="field">Character ID</div><input class="name" name="name" type="text" value="<%= user.CharacterID %>" readonly></div>
+                        <!-- <div class="info"><div class="field">Character Name</div><input class="name" name="name" type="text" value="<%= user.CharacterName %>" readonly></div> -->
+                        <div class="info"><div class="field">Character Race</div><input class="name" name="name" type="text" value="<%= user.CharacterRace %>" readonly></div>
+<!--                         <div class="info"><div class="field">Character Alliance</div><input class="name" name="name" type="text" value="<%= user.CharacterAlliance %>" readonly></div>
+                        <div class="info"><div class="field">Character Corporation</div><input class="name" name="name" type="text" value="<%= user.CharacterCorporation %>" readonly></div> -->
+                        <div class="info"><div class="field">Access Token</div><input class="name" name="name" type="text" value="<%= user.accessToken %>" readonly></div>
+                    </div>
+            
+
+                    </div>
+            
+</body>
+<%= include /partials/footer.ejs %>
+
+    </html>

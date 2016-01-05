@@ -1,5 +1,5 @@
 body{
-	background-image: url(http://lanwarx.ca/wp-content/uploads/2015/09/lanwarx-2015-colour.jpg);
+	background-image: url(/background.jpg);
   	-webkit-background-size: cover;
   	-moz-background-size: cover;
   	-o-background-size: cover;
@@ -16,10 +16,12 @@ body{
 	min-height:100%;
 	background:rgba(220, 220, 220, 0.5);
 	overflow:hidden;
+
 }
 .logo {
 	display:block;
 	margin-left:auto;
 	margin-right:auto;
 	padding:40px;
+	opacity:0.8;
 }

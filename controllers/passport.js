@@ -4,8 +4,8 @@ var EveOnlineStrategy    = require('passport-eve-oauth').Strategy;
 
 // load up the user model
 var User       = require('../models/user');
-
-
+var request = require('request');
+var parseString = require('xml2js').parseString;
 
 
 
@@ -30,34 +30,35 @@ passport.deserializeUser(function(id, done) {
    passport.use('eveonline', new EveOnlineStrategy({
     clientID: "a6d649dbe7724629af5900aa20c186f4",
     clientSecret: "6dutMnDMCGvAAWGGbFacQ7u3pEenBDD1VZjxlI9I",
-     callbackURL: "http://lan-ce.com/auth/eveonline/callback",
-     userAgent: 'http://lan-ce.com/'
+     //callbackURL: "http://lan-ce.com/auth/eveonline/callback",
+    // userAgent: 'http://lan-ce.com/'
 
-     // callbackURL: "http://localhost:8081/auth/eveonline/callback",
-     // userAgent: 'http://localhost:8081/'
+      callbackURL: "http://localhost:8081/auth/eveonline/callback",
+      userAgent: 'http://localhost:8081/'
     },
       function(accessToken, refreshToken, profile, done) {
 
-
+//https://api.eveonline.com/eve/CharacterInfo.xml.aspx?characterID=91948036
 User.findOne({CharacterID:profile._json.CharacterID}, function(err, user) {
-    if (user)
-    {
-        console.log("found"); 
-        user.accessToken = accessToken;
-        user.save();
-        return done(null, user);
-    }
-        else
-     {
-            console.log("Not found"); 
-            var user = new User();
+
+if (user == undefined) {
+        var user = new User();    
+}
         user.CharacterName = profile._json.CharacterName;
         user.CharacterID = profile._json.CharacterID;
         user.accessToken = accessToken;
-        user.save();
-            return done(null, user);
-    }
-    
+request('https://api.eveonline.com/eve/CharacterInfo.xml.aspx?characterID=' + profile._json.CharacterID, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+parseString(body, function (err, result) {
+user.CharacterRace = result.eveapi.result[0].race;
+user.CharacterCorporation = result.eveapi.result[0].corporation;
+user.CharacterAlliance = result.eveapi.result[0].alliance;
+user.CharacterCorporationID = result.eveapi.result[0].corporationID;
+user.CharacterAllianceID = result.eveapi.result[0].allianceID;
+user.save();
+return done(null, user);
+});
+}});
  });
 
 
