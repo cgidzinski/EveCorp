@@ -19,7 +19,9 @@
                   <h6 class="red"><%= corp.Doctrines[i].Time %></h6>
                   <h6 class="red"><%= corp.Doctrines[i].ShipID %></h6>
                   <h6 class="red"><%= corp.Doctrines[i]._id %></h6>
+                  <% if (user.CharacterRoleLevel >= 4) { %>
                   <a href="/deletedoctrine/<%= corp.Doctrines[i]._id %>">Delete</a>
+                  <% } %>
 </div>
 
 
