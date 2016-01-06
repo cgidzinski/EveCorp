@@ -1,11 +1,13 @@
                     <ul id="admin-sidebar">
                         <a  href="/dashboard"><li>Dashboard</li></a>
-                        <a  href="/wiki"><li>Wiki</li></a>
+                        <a  href="/wiki"><li>Wiki*</li></a>
                         <hr>
                         <a  href="/announcements"><li>Announcements</li></a>
-                        <a  href="/timers"><li>Timers</li></a>
+                        <a  href="/timers"><li>Timers**</li></a>
                         <a  href="/pings"><li>Recent Pings</li></a>
                         <a  href="/doctrines"><li>Doctrines</li></a>
+                        <% if (user.CharacterRoleLevel >= 4) { %>
                         <hr>
                         <a  href="/administrative"><li>Administrative</li></a>
+                        <% } %>
                     </ul>

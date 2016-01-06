@@ -8,10 +8,20 @@
 <body>
 <%= include /partials/sidebar.ejs %>
                     <div class="tab-content">
-                            <h3>Announcements</h3>
+                            <h3>Announcements [<%= corp.Announcements.length %>]</h3>
                            <br>
-                      CONTENT
-                      <br>
+                           <% for(var i=0; i < corp.Announcements.length; i++) { %>
+<div class="well" >
+                  <h3 class="red"><%= corp.Announcements[i].Title %></h3>
+                  <h5 class="red"><%= corp.Announcements[i].Body %></h5>
+                  <h6 class="red"><%= corp.Announcements[i].Time %></h6>
+                  <h6 class="red"><%= corp.Announcements[i].Author %></h6>
+                  <h6 class="red"><%= corp.Announcements[i]._id %></h6>
+</div>
+
+
+    <% } %>
+                 
 
                     </div>
             

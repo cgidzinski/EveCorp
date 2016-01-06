@@ -10,11 +10,47 @@
                     <div class="tab-content">
                             <h3>Administrative</h3>
                            <br>
-                      CONTENT
+                      
+          <hr>
+                           <br>
+                           <h3>New Announcement</h3>
+                          <form method="post" action="/newannouncement" name="announcement-form" id="announcement-form">
+                    <div class="info extended"><div class="field">Title</div><input class="title" name="title" type="text" autocomplete="off" value="Some Title"></div>
+                    <div class="info extended"><div class="field">Body</div><input class="body" name="body" type="text" autocomplete="off" value="Some Body"></div>
+                    <input class="author" name="author" type="text" autocomplete="off" value="<%= user._id %>" hidden>
+                    <br>
+                    <button class="btn btn-danger update-submit button">Push New Announcement</button>
+                    </form>
                       <br>
 
+       <hr>
+                           <br>
+                           <h3>New Ping</h3>
+                          <form method="post" action="/newping" name="ping-form" id="ping-form">
+                    <div class="info extended"><div class="field">Title</div><input class="title" name="title" type="text" autocomplete="off" value="Some Title"></div>
+                    <div class="info extended"><div class="field">Body</div><input class="body" name="body" type="text" autocomplete="off" value="Some Body"></div>
+                    <input class="author" name="author" type="text" autocomplete="off" value="<%= user._id %>" hidden>
+                    <br>
+                    <button class="btn btn-danger update-submit button">Push New Ping</button>
+                    </form>
+                      <br>
+
+                       <hr>
+                           <br>
+                           <h3>New Doctrine</h3>
+                          <form method="post" action="/newdoctrine" name="doctrine-form" id="doctrine-form">
+                    <div class="info extended"><div class="field">Title</div><input class="title" name="title" type="text" autocomplete="off" value="Some Title"></div>
+                    <div class="info extended"><div class="field">About</div><input class="about" name="about" type="text" autocomplete="off" value="Some About"></div>
+                    <div class="info extended"><div class="field">Ship ID</div><input class="shipid" name="shipid" type="text" autocomplete="off" value="29986"></div><a href="http://eve-files.com/chribba/typeid.txt">Ship ID List</a>
+                    <input class="author" name="author" type="text" autocomplete="off" value="<%= user._id %>" hidden>
+                    <div class="info extended"><div class="field">Body</div><textarea rows="4" cols="150" class="body" name="body" type="text" autocomplete="off">Some Doctrine</textarea>
+                    <br>
+                    <button class="btn btn-danger update-submit button">Push New Doctrine</button>
+                    </form>
+                      
+<br>
                     </div>
-            
+            <br>
 </body>
 <%= include /partials/footer.ejs %>
 

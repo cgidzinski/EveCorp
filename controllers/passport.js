@@ -4,6 +4,7 @@ var EveOnlineStrategy    = require('passport-eve-oauth').Strategy;
 
 // load up the user model
 var User       = require('../models/user');
+var Corporation = require('../models/corporation');
 var request = require('request');
 var parseString = require('xml2js').parseString;
 
@@ -56,6 +57,20 @@ user.CharacterAlliance = result.eveapi.result[0].alliance;
 user.CharacterCorporationID = result.eveapi.result[0].corporationID;
 user.CharacterAllianceID = result.eveapi.result[0].allianceID;
 user.save();
+
+
+Corporation.findOne({CorporationID:result.eveapi.result[0].corporationID}, function(err, corp) {
+if (corp == undefined) {
+        var corp = new Corporation();    
+        corp.CorporationID=result.eveapi.result[0].corporationID;
+        corp.CorporationName=result.eveapi.result[0].corporation;
+        corp.save();
+}
+});
+
+
+
+
 return done(null, user);
 });
 }});

@@ -8,12 +8,21 @@
 <body>
 <%= include /partials/sidebar.ejs %>
                     <div class="tab-content">
-                            <h3>Doctrines</h3>
+                      <h3>Doctrines [<%= corp.Doctrines.length %>]</h3>
                            <br>
-                      CONTENT
-                      <br>
+                           <% for(var i=0; i < corp.Doctrines.length; i++) { %>
+<div class="well" >
+  <img src="https://image.eveonline.com/Type/<%= corp.Doctrines[i].ShipID %>_64.png"><br>
+                  <h3 class="red"><%= corp.Doctrines[i].Title %></h3><br>
+                  <code class="red"><%= corp.Doctrines[i].About %></code>
+                  <pre class="red"><%= corp.Doctrines[i].Body %></pre>
+                  <h6 class="red"><%= corp.Doctrines[i].Time %></h6>
+                  <h6 class="red"><%= corp.Doctrines[i].ShipID %></h6>
+                  <h6 class="red"><%= corp.Doctrines[i]._id %></h6>
+</div>
 
-                    </div>
+
+    <% } %>
             
 </body>
 <%= include /partials/footer.ejs %>
