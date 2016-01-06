@@ -48,12 +48,40 @@ module.exports = function(app, passport, io) {
             });
         })
     });
+
+                app.get('/deleteping/:id',isLoggedIn, function(req, res) {
+                  if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+for (var i = corp.Pings.length - 1; i >= 0; i--) {
+  if (corp.Pings[i]._id == req.params.id)
+  {
+corp.Pings.splice(i, 1);
+corp.save();
+}
+}
+            res.redirect('/pings');
+        })
+    });
                     app.get('/announcements',isLoggedIn, function(req, res) {
    Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
             res.render('announcements.ejs', {
                 user: req.user,
                 corp: corp
             });
+        })
+    });
+
+                app.get('/deleteannouncement/:id',isLoggedIn, function(req, res) {
+                  if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+for (var i = corp.Announcements.length - 1; i >= 0; i--) {
+  if (corp.Announcements[i]._id == req.params.id)
+  {
+corp.Announcements.splice(i, 1);
+corp.save();
+}
+}
+            res.redirect('/announcements');
         })
     });
                         app.get('/doctrines',isLoggedIn, function(req, res) {
@@ -64,6 +92,24 @@ module.exports = function(app, passport, io) {
             });
         })
     });
+
+
+                app.get('/deletedoctrine/:id',isLoggedIn, function(req, res) {
+                  if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+for (var i = corp.Doctrines.length - 1; i >= 0; i--) {
+  if (corp.Doctrines[i]._id == req.params.id)
+  {
+corp.Doctrines.splice(i, 1);
+corp.save();
+}
+}
+            res.redirect('/doctrines');
+        })
+    });
+
+
+
        app.get('/administrative',isLoggedIn, function(req, res) {
         if (req.user.CharacterRoleLevel >= 4)
         {

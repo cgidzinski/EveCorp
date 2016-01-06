@@ -24,6 +24,7 @@
     "async":"*",
     "serve-favicon":"*",
     "cookie":"*",
-    "jsonwebtoken":"*"
+    "jsonwebtoken":"*",
+    "xml2js":"*"
   }
 }
