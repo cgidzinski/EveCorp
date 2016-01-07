@@ -1,17 +1,31 @@
 <!doctype html>
 
 <head>
-    <title>Eve Corporation Manager | Wiki</title>
+    <title>Eve Corporation Manager | Wikis</title>
     <%= include /partials/header.ejs %>
     <link rel="stylesheet" href="/css/admin.css" type="text/css">
 </head>
 <body>
 <%= include /partials/sidebar.ejs %>
                     <div class="tab-content">
-                            <h3>Wiki</h3>
+                            <h3>Wikis [<%= corp.Wikis.length %>]</h3>
                            <br>
-                      CONTENT
-                      <br>
+                           <% for(var i=0; i < corp.Wikis.length; i++) { %>
+<div class="well" >
+                  <h3 class="red"><%= corp.Wikis[i].Title %></h3>
+                  <h5 class="red"><%= corp.Wikis[i].Body %></h5>
+                  <h6 class="red"><%= corp.Wikis[i].Time %></h6>
+                  <h6 class="red"><%= corp.Wikis[i].Author %></h6>
+                  <h6 class="red"><%= corp.Wikis[i]._id %></h6>
+                  <% if (user.CharacterRoleLevel >= 4) { %>
+                  <a href="/deletewiki/<%= corp.Wikis[i]._id %>">Delete</a>
+                  <% } %>
+
+</div>
+
+
+    <% } %>
+                    
 
                     </div>
             

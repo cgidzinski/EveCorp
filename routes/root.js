@@ -3,6 +3,7 @@ var Corporation = require('../models/corporation');
 var Announcement = require('../models/announcement');
 var Doctrine = require('../models/doctrine');
 var Ping = require('../models/ping');
+var Wiki = require('../models/wiki');
 
 
 function isLoggedIn(req, res, next) {
@@ -30,11 +31,30 @@ module.exports = function(app, passport, io) {
          user: req.user
        });
     });
-        app.get('/wiki',isLoggedIn, function(req, res) {
-      res.render('wiki.ejs', {
-         user: req.user
-       });
+                    app.get('/wiki',isLoggedIn, function(req, res) {
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+            res.render('wiki.ejs', {
+                user: req.user,
+                corp: corp
+            });
+        })
     });
+
+
+                app.get('/deletewiki/:id',isLoggedIn, function(req, res) {
+                  if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+for (var i = corp.Wikis.length - 1; i >= 0; i--) {
+  if (corp.Wikis[i]._id == req.params.id)
+  {
+corp.Wikis.splice(i, 1);
+corp.save();
+}
+}
+      res.redirect('/wiki');
+        })
+    });
+
             app.get('/timers',isLoggedIn, function(req, res) {
       res.render('timers.ejs', {
          user: req.user
@@ -181,6 +201,22 @@ res.redirect('/announcements');
     }
   });
 
+
+  app.post('/newwiki', isLoggedIn, function(req, res) {
+    if (req.user.CharacterRoleLevel >= 4) {
+var wikiItem = new Wiki();
+          wikiItem.Title = req.param('title');
+          wikiItem.Body = req.param('body');
+          wikiItem.Author = req.param('author');
+  Corporation.findOne({CorporationID:req.user.CharacterCorporationID},{'Wikis':1}, function(err, corp) {
+corp.Wikis.push(wikiItem);
+corp.save();
+res.redirect('/wiki');
+       });
+    } else {
+      res.redirect('/');
+    }
+  });
 
   app.post('/newdoctrine', isLoggedIn, function(req, res) {
     if (req.user.CharacterRoleLevel >= 4) {
