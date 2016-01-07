@@ -8,10 +8,15 @@
 <body>
 <%= include /partials/sidebar.ejs %>
                     <div class="tab-content">
-                            <h3>Dashboard</h3>
-                           <br>
-                      OI BRUVS
+                      <img src="https://image.eveonline.com/Corporation/<%= corp.CorporationID %>_256.png">
+                      <h3><%= corp.CorporationName %></h3>
                       <br>
+<br>Wiki's: <%= corp.Wikis.length %>
+<br>Announcements's: <%= corp.Announcements.length %>
+<br>Pings's: <%= corp.Pings.length %>
+<br>Doctrines's: <%= corp.Doctrines.length %>
+
+
 
                     </div>
             

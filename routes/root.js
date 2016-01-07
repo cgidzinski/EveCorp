@@ -4,6 +4,7 @@ var Announcement = require('../models/announcement');
 var Doctrine = require('../models/doctrine');
 var Ping = require('../models/ping');
 var Wiki = require('../models/wiki');
+var Timer = require('../models/timer');
 
 
 function isLoggedIn(req, res, next) {
@@ -26,10 +27,13 @@ module.exports = function(app, passport, io) {
     });
 
 
-    app.get('/dashboard',isLoggedIn, function(req, res) {
-      res.render('dashboard.ejs', {
-         user: req.user
-       });
+                      app.get('/dashboard',isLoggedIn, function(req, res) {
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+            res.render('dashboard.ejs', {
+                user: req.user,
+                corp: corp
+            });
+        })
     });
                     app.get('/wiki',isLoggedIn, function(req, res) {
    Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
@@ -56,10 +60,38 @@ corp.save();
     });
 
             app.get('/timers',isLoggedIn, function(req, res) {
-      res.render('timers.ejs', {
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+            res.render('timers.ejs', {
+                user: req.user,
+                corp: corp
+            });
+        })
+    });
+
+
+
+
+                app.get('/deletetimer/:id',isLoggedIn, function(req, res) {
+                  if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+for (var i = corp.Timers.length - 1; i >= 0; i--) {
+  if (corp.Timers[i]._id == req.params.id)
+  {
+corp.Timers.splice(i, 1);
+corp.save();
+}
+}
+      res.redirect('/timers');
+        })
+    });
+
+
+                        app.get('/comms',isLoggedIn, function(req, res) {
+      res.render('comms.ejs', {
          user: req.user
        });
     });
+
                 app.get('/pings',isLoggedIn, function(req, res) {
    Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
             res.render('pings.ejs', {
@@ -184,6 +216,23 @@ res.redirect('/pings');
     }
   });
 
+
+  app.post('/newtimer', isLoggedIn, function(req, res) {
+    if (req.user.CharacterRoleLevel >= 4) {
+var timerItem = new Timer();
+          timerItem.Location = req.param('location');
+          timerItem.EveTime = req.param('evetime');
+          timerItem.Comment = req.param('comment');
+          timerItem.Author = req.param('author');
+  Corporation.findOne({CorporationID:req.user.CharacterCorporationID},{'Timers':1}, function(err, corp) {
+corp.Timers.push(timerItem);
+corp.save();
+res.redirect('/timers');
+       });
+    } else {
+      res.redirect('/');
+    }
+  });
 
   app.post('/newannouncement', isLoggedIn, function(req, res) {
     if (req.user.CharacterRoleLevel >= 4) {

@@ -10,9 +10,43 @@
                     <div class="tab-content">
                             <h3>Timers</h3>
                            <br>
-                      CONTENT
-                      <br>
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Location</th>
+                <th>Eve Time</th>
+                <th>Countdown</th>
+                <th>Comment</th>
+                 <th>Author</th> 
+<% if (user.CharacterRoleLevel >= 4) { %>
+<th>Delete</th> 
+               <% } %>   
+            </tr>
+        </thead>
+
+        <tbody>
+
+
+
+
+<% for(var i=0; i < corp.Timers.length; i++) { %>
+ <tr>
+                <td><%= corp.Timers[i].Location %></td>
+                <td><%= corp.Timers[i].EveTime %></td>
+                <td><%= corp.Timers[i].EveTime %>**</td>
+                <td><%= corp.Timers[i].Comment %></td>
+                <td><%= corp.Timers[i].Author %></td>
+                 <% if (user.CharacterRoleLevel >= 4) { %>
+                  <td><a href="/deletetimer/<%= corp.Timers[i]._id %>">Delete</a></td>
+                  <% } %>
+
+            </tr>
+<% } %>
+        </tbody>
+    </table>
+
+                      <br>
                     </div>
             
 </body>

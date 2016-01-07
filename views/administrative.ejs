@@ -37,6 +37,19 @@
 
                            <hr>
                            <br>
+                                                   <h3>New Timer</h3>
+                          <form method="post" action="/newtimer" name="timer-form" id="timer-form">
+                    <div class="info extended"><div class="field">Location</div><input class="location" name="location" type="text" autocomplete="off" value="Some Location"></div>
+                    <div class="info extended"><div class="field">EveTime</div><input class="evetime" name="evetime" type="text" autocomplete="off" value="Some Time"></div>
+                    <div class="info extended"><div class="field">Comment</div><input class="comment" name="comment" type="text" autocomplete="off" value="Some Comments"></div>
+                    <input class="author" name="author" type="text" autocomplete="off" value="<%= user._id %>" hidden>
+                    <br>
+                    <button class="btn btn-danger update-submit button">Push New Timer</button>
+                    </form>
+                      <br>
+
+                           <hr>
+                           <br>
                            <h3>New Wiki</h3>
                           <form method="post" action="/newwiki" name="wiki-form" id="wiki-form">
                     <div class="info extended"><div class="field">Title</div><input class="title" name="title" type="text" autocomplete="off" value="Some Title"></div>
