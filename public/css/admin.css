@@ -26,8 +26,8 @@ body{
 	text-decoration: none;
 }
 #admin-sidebar li:hover{
-	background-color:#1C223E;
-	color:#eee;
+	background-color:#4A4B50;
+	color:#FFBC01;
 }
 .tab-pane {
 	background:none;
@@ -43,6 +43,7 @@ body{
 	overflow-y:scroll;
 	float:left;
 	background:#393A42;
+	background:#4A4B50;
 	color:#eee;
 }
 .tab-content p {
