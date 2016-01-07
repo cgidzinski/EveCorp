@@ -42,7 +42,7 @@ body{
 	height:calc(100vh - 90px);
 	overflow-y:scroll;
 	float:left;
-	background:#444;
+	background:#393A42;
 	color:#eee;
 }
 .tab-content p {

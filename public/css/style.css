@@ -119,6 +119,9 @@ hr {
 .red {
 	color:#ED1C24;
 }
+.blue {
+	color:#323B6B
+}
 .button {
 	font-weight:bold;
 	border-radius:0;
@@ -200,6 +203,7 @@ ul.list{
 	height:40px;
 	padding:12px;
 	background:#eee;
+	border-bottom:solid 3px #e8e8e8;
 }
 .post-header *{
 	margin:0;
@@ -207,7 +211,7 @@ ul.list{
 .post-header h4{
 	display:inline-block;
 	float:left;
-	letter-spacing:3px;
+	letter-spacing:2px;
 }
 .post-header h5{
 	display:inline-block;
@@ -224,8 +228,8 @@ ul.list{
 	padding-left:9px;
 }
 .post-footer{
-	height:40px;
-	padding:12px;
+	height:30px;
+	padding:6px 12px;
 	background:#FAFBFD;
 	background:#FFFDF8;
 }
@@ -242,7 +246,7 @@ ul.list{
 	margin:0;
 }
 .post-footer h5.controls a{
-	color:#FFC627;
+	color:#FFBC01;
 }
 .well.dark{
 	background:#444;
@@ -586,7 +590,7 @@ ul.notifications li{
 
 }
 #footer-bar{
-	background-color:#ED1C24;
+	background-color:#323B6B;
 	width:inherit;
 	height:40px;
 }
