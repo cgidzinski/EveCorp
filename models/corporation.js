@@ -9,6 +9,7 @@ var corporationSchema = mongoose.Schema({
         Pings           		  : [],
         Announcements             : [],
         Wikis           		  : [],
+        Timers           		  : [],
         Doctrines          		  : []
 });
 
