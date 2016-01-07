@@ -156,7 +156,7 @@ hr {
     transition: all .3s ease-in-out;
 }
 .navbar-inverse .navbar-brand:hover {
-	color:#FF3E46;
+	color:#FFD561;
 }
 .container {
 	max-width:1080px;
@@ -330,8 +330,8 @@ hr {
 	border-top:6px #fff solid;
 }
 hr.dark {
-	margin:0 0 20px 0;
-	border-top:6px #444 solid;	
+	margin:0;
+	border-top:3px #1C223E solid;	
 }
 .profile-info{
 }
@@ -590,7 +590,7 @@ ul.notifications li{
 
 }
 #footer-bar{
-	background-color:#323B6B;
+	background-color:#1C223E;
 	width:inherit;
 	height:40px;
 }

@@ -1,6 +1,6 @@
 body{
 	padding-top:50px;
-	background:#ddd;
+	background:#0A0A0A;
 }
 .navbar{
 	margin:0;
@@ -19,15 +19,15 @@ body{
 }
 #admin-sidebar a .active{
 	background-color:#fff;
-	color:#222;
+	color:#FFF;
 }
 #admin-sidebar a {
-	color:#222;
+	color:#eee;
 	text-decoration: none;
 }
 #admin-sidebar li:hover{
-	background-color:#efefef;
-	color:#222;
+	background-color:#1C223E;
+	color:#eee;
 }
 .tab-pane {
 	background:none;
