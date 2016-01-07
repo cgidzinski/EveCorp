@@ -154,7 +154,7 @@ var pingItem = new Ping();
           pingItem.Title = req.param('title');
           pingItem.Body = req.param('body');
           pingItem.Author = req.param('author');
-  Corporation.findOne({},{'Pings':1}, function(err, corp) {
+  Corporation.findOne({CorporationID:req.user.CharacterCorporationID},{'Pings':1}, function(err, corp) {
 corp.Pings.push(pingItem);
 corp.save();
 res.redirect('/pings');
@@ -171,7 +171,7 @@ var announcementItem = new Announcement();
           announcementItem.Title = req.param('title');
           announcementItem.Body = req.param('body');
           announcementItem.Author = req.param('author');
-  Corporation.findOne({},{'Announcements':1}, function(err, corp) {
+  Corporation.findOne({CorporationID:req.user.CharacterCorporationID},{'Announcements':1}, function(err, corp) {
 corp.Announcements.push(announcementItem);
 corp.save();
 res.redirect('/announcements');
@@ -189,7 +189,7 @@ var doctrineItem = new Doctrine();
           doctrineItem.About = req.param('about');
           doctrineItem.Body = req.param('body');
           doctrineItem.ShipID = req.param('shipid');
-  Corporation.findOne({},{'Doctrines':1}, function(err, corp) {
+  Corporation.findOne({CorporationID:req.user.CharacterCorporationID},{'Doctrines':1}, function(err, corp) {
 corp.Doctrines.push(doctrineItem);
 corp.save();
 res.redirect('/doctrines');
