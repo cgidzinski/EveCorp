@@ -222,9 +222,9 @@ app.get('/auth/eveonline/callback',passport.authenticate('eveonline', {
 
  
 
-res.redirect('/dashboard');
+// res.redirect('/dashboard');
  
-  });
+//   });
 
 
   app.post('/newping', isLoggedIn, function(req, res) {
