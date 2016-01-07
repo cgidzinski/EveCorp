@@ -12,7 +12,7 @@ function isLoggedIn(req, res, next) {
   res.redirect('/');
 }
 
-module.exports = function(app, passport, io) {
+module.exports = function(app, passport) {
 
     // =============================================================================
     // ROOT ========================================================================

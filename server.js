@@ -6,7 +6,6 @@ var express  = require('express');
 var app      = express();
 
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
 
 var port     = process.env.PORT || 8080;
 var mongoose = require('mongoose');
@@ -46,14 +45,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs'); // set up ejs for templating
 app.use(express.static(__dirname + '/public'));
 // required for passport
-app.use(session({ secret: 'etchisketchywantachi' })); // session secret
+app.use(session({ secret: config.secret })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(favicon(__dirname + '/public/favicon.ico'));
 // routes ======================================================================
 
-require('./routes/root.js')(app, passport, io);
+require('./routes/root.js')(app, passport);
 
 // launch ======================================================================
 http.listen(port);
