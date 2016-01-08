@@ -16,7 +16,7 @@
 <br>Pings's: <%= corp.Pings.length %>
 <br>Doctrines's: <%= corp.Doctrines.length %>
 <br>items: <%= items.length %>
-
+ 
 
 
 
@@ -24,11 +24,17 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
 <script src="//jquery-csv.googlecode.com/files/jquery.csv-0.71.js"></script>
 
+<code>
+TODO:
+buy/sell/request
+shipping
+fleets
 
+</code>
 <div class="container">
 
   <div class="form-group">
-    <label>Languages</label>
+    <label>Item Search</label>
     <input class="form-control autocomplete" placeholder="Enter A" />
   </div>
 
@@ -43,12 +49,7 @@
         <script type="text/javascript">
 $(function() {
 
-  var availableTags = [
-    "ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++",
-    "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran",
-    "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl",
-    "PHP", "Python", "Ruby", "Scala", "Scheme"
-  ];
+  var availableTags = ("<%= data %>").split(",");
   
   $(".autocomplete").autocomplete({
     source: availableTags
