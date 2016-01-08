@@ -1,35 +1,40 @@
-<!doctype html>
+
+
+
+    <!doctype html>
 
 <head>
-    <title>Eve Corporation Manager | Wikis</title>
-    <%= include /partials/header.ejs %>
-    <link rel="stylesheet" href="/css/admin.css" type="text/css">
+  <title>Eve Corporation Manager | Wiki</title>
+  <%= include /partials/header.ejs %>
+  <link rel="stylesheet" href="/css/admin.css" type="text/css">
 </head>
 <body>
-<%= include /partials/sidebar.ejs %>
-                    <div class="tab-content">
-                            <h3>Wikis [<%= corp.Wikis.length %>]</h3>
-                           <br>
-                           <% for(var i=0; i < corp.Wikis.length; i++) { %>
-<div class="well" >
-                  <h3 class="red"><%= corp.Wikis[i].Title %></h3>
-                  <h5 class="red"><%= corp.Wikis[i].Body %></h5>
-                  <h6 class="red"><%= corp.Wikis[i].Time %></h6>
-                  <h6 class="red"><%= corp.Wikis[i].Author %></h6>
-                  <h6 class="red"><%= corp.Wikis[i]._id %></h6>
-                  <% if (user.CharacterRoleLevel >= 4) { %>
-                  <a href="/deletewiki/<%= corp.Wikis[i]._id %>">Delete</a>
-                  <% } %>
-
-</div>
-
-
+  <%= include /partials/sidebar.ejs %>
+  <div class="tab-content">
+    <h3>Wikis [<%= corp.Wikis.length %>]</h3>
+    <br>
+    <% for(var i=0; i < corp.Wikis.length; i++) { %>
+    <div class="well">
+      <div class="post-header">
+        <h4 class="charcoal"><%= corp.Wikis[i].Title %></h4>
+        <h5><%= corp.Wikis[i].Time %></h5>
+      </div>
+      <div class="post-body"><div>
+        <%= corp.Wikis[i].Body %>
+        </div>
+      </div>
+      <div class="post-footer">
+        <h5><%= corp.Wikis[i].Author %></h5>
+        <h5><%= corp.Wikis[i]._id %></h5>
+        <h5 class="controls">
+        <% if (user.CharacterRoleLevel >= 4) { %>
+          <a href="/deleteannouncement/<%= corp.Wikis[i]._id %>">Delete</a><% } %>
+        </h5>
+      </div>
+    </div>
     <% } %>
-                    
-
-                    </div>
-            
+</div>
 </body>
 <%= include /partials/footer.ejs %>
 
-    </html>
+</html>

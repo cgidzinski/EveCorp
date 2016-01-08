@@ -97,7 +97,30 @@ corp.save();
         })
     });
 
-
+            app.get('/requests',isLoggedIn, function(req, res) {
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+            res.render('requests.ejs', {
+                user: req.user,
+                corp: corp
+            });
+        })
+    });
+                        app.get('/market',isLoggedIn, function(req, res) {
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+            res.render('market.ejs', {
+                user: req.user,
+                corp: corp
+            });
+        })
+    });
+                                    app.get('/fleets',isLoggedIn, function(req, res) {
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+            res.render('fleets.ejs', {
+                user: req.user,
+                corp: corp
+            });
+        })
+    });
 
 
                 app.get('/deletetimer/:id',isLoggedIn, function(req, res) {

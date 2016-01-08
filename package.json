@@ -21,6 +21,6 @@
     "cookie":"*",
     "jsonwebtoken":"*",
     "xml2js":"*",
-    "js-yaml":"*"
+    "fast-csv":"*"
   }
 }

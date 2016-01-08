@@ -1,35 +1,37 @@
 <!doctype html>
 
 <head>
-    <title>Eve Corporation Manager | Pings</title>
-    <%= include /partials/header.ejs %>
-    <link rel="stylesheet" href="/css/admin.css" type="text/css">
+  <title>Eve Corporation Manager | Pings</title>
+  <%= include /partials/header.ejs %>
+  <link rel="stylesheet" href="/css/admin.css" type="text/css">
 </head>
 <body>
-<%= include /partials/sidebar.ejs %>
-                    <div class="tab-content">
-                            <h3>Pings [<%= corp.Pings.length %>]</h3>
-                           <br>
-                           <% for(var i=0; i < corp.Pings.length; i++) { %>
-<div class="well" >
-                  <h3 class="red"><%= corp.Pings[i].Title %></h3>
-                  <h5 class="red"><%= corp.Pings[i].Body %></h5>
-                  <h6 class="red"><%= corp.Pings[i].Time %></h6>
-                  <h6 class="red"><%= corp.Pings[i].Author %></h6>
-                  <h6 class="red"><%= corp.Pings[i]._id %></h6>
-                  <% if (user.CharacterRoleLevel >= 4) { %>
-                  <a href="/deleteping/<%= corp.Pings[i]._id %>">Delete</a>
-                  <% } %>
-
-</div>
-
-
+  <%= include /partials/sidebar.ejs %>
+  <div class="tab-content">
+    <h3>Pings [<%= corp.Pings.length %>]</h3>
+    <br>
+    <% for(var i=0; i < corp.Pings.length; i++) { %>
+    <div class="well">
+      <div class="post-header">
+        <h4 class="charcoal"><%= corp.Pings[i].Title %></h4>
+        <h5><%= corp.Pings[i].Time %></h5>
+      </div>
+      <div class="post-body"><div>
+        <%= corp.Pings[i].Body %>
+        </div>
+      </div>
+      <div class="post-footer">
+        <h5><%= corp.Pings[i].Author %></h5>
+        <h5><%= corp.Pings[i]._id %></h5>
+        <h5 class="controls">
+        <% if (user.CharacterRoleLevel >= 4) { %>
+          <a href="/deleteannouncement/<%= corp.Pings[i]._id %>">Delete</a><% } %>
+        </h5>
+      </div>
+    </div>
     <% } %>
-                    
-
-                    </div>
-            
+</div>
 </body>
 <%= include /partials/footer.ejs %>
 
-    </html>
+</html>
