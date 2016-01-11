@@ -1,16 +1,46 @@
 <!doctype html>
 
 <head>
-  <title>Eve Corporation Manager | Forum</title>
+  <title>Eve Corporation Manager | Forum Post</title>
   <%= include /partials/header.ejs %>
   <link rel="stylesheet" href="/css/admin.css" type="text/css">
 </head>
 <body>
   <%= include /partials/sidebar.ejs %>
   <div class="tab-content">
-    Title <%= post.Title%><br>
-    Answers: Title <%= post.Answers.length%>
-  
+    <h2>Title <%= post.Title%></h2>
+<hr>  
+    <h3>Answers [<%= post.Answers.length %>]</h3>
+    <br>
+    <% for(var i=0; i < post.Answers.length; i++) { %>
+    <div class="well">
+      <div class="post-header">
+        <h4 class="charcoal"><%= post.Answers[i].Title %></h4>
+        <h5><%= post.Answers[i].Time %></h5>
+      </div>
+      <div class="post-body"><div>
+        <%= post.Answers[i].Body %>
+        </div>
+      </div>
+      <div class="post-footer">
+        <h5><%= post.Answers[i].Author %></h5>
+        <h5><%= post.Answers[i]._id %></h5>
+        <h5 class="controls">
+        <% if (user.CharacterRoleLevel >= 4) { %>
+          <a href="/deletepostanswer/<%= post.Answers[i]._id %>">Delete</a><% } %>
+        </h5>
+      </div>
+    </div>
+    <% } %>
+    <hr>
+    <h3>New Forum Post</h3>
+                          <form method="post" action="/newforumpost/<%= post._id%>" name="post-form" id="post-form">
+                    <div class="info extended"><div class="field">Title</div><input class="title" name="title" type="text" autocomplete="off" value="Some Title"></div>
+                    <div class="info extended"><div class="field">Body</div><input class="body" name="body" type="text" autocomplete="off" value="Some Body"></div>
+                    <input class="author" name="author" type="text" autocomplete="off" value="<%= user._id %>" hidden>
+                    <br>
+                    <button class="btn btn-danger update-submit button">Push New Forum Item</button>
+                    </form>
 </div>
 </body>
 <%= include /partials/footer.ejs %>

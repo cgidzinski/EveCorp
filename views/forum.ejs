@@ -12,11 +12,12 @@
     <br>
     <% for(var i=0; i < corp.Forum.length; i++) { %>
     <div class="well">
+      <a href="/forum/<%= corp.Forum[i]._id %>">
       <div class="post-header">
         <h4 class="charcoal"><%= corp.Forum[i].Title %></h4>
         <h5><%= corp.Forum[i].Time %></h5>
-      </div>
-      <div class="post-body"><div>
+      </div></a>
+<!--       <div class="post-body"><div>
         <%= corp.Forum[i].Body %> <a href="/forum/<%= corp.Forum[i]._id %>">Follow</a>
         </div>
       </div>
@@ -27,9 +28,24 @@
         <% if (user.CharacterRoleLevel >= 4) { %>
           <a href="/deleteforum/<%= corp.Forum[i]._id %>">Delete</a><% } %>
         </h5>
-      </div>
+      </div> -->
     </div>
     <% } %>
+
+
+       <hr>
+                                  <br>
+                           <h3>New Forum Post</h3>
+                          <form method="post" action="/newforum" name="post-form" id="post-form">
+                    <div class="info extended"><div class="field">Title</div><input class="title" name="title" type="text" autocomplete="off" value="Some Title"></div>
+                    <div class="info extended"><div class="field">Body</div><input class="body" name="body" type="text" autocomplete="off" value="Some Body"></div>
+                    <input class="author" name="author" type="text" autocomplete="off" value="<%= user._id %>" hidden>
+                    <br>
+                    <button class="btn btn-danger update-submit button">Push New Forum Item</button>
+                    </form>
+                      <br>
+
+
 </div>
 </body>
 <%= include /partials/footer.ejs %>

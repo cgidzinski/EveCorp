@@ -1,3 +1,4 @@
+var async = require('async');
 var User = require('../models/user');
 var Corporation = require('../models/corporation');
 var Announcement = require('../models/announcement');
@@ -67,16 +68,14 @@ Item.find({}, function(err, items) {
     });
 
 
-var async = require('async');
+
 
                 app.get('/forum/:id',isLoggedIn, function(req, res) {
-                  if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
    Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
 
     async.forEachOf(corp.Forum, function(value, key, callback) {
                    if (value._id == req.params.id)
                    {
-                    console.log(value);
                        res.render('forumpost.ejs', {
                 user: req.user,
                 post:value,
@@ -91,6 +90,35 @@ var async = require('async');
         })
     });
 
+
+                app.post('/newforumpost/:id',isLoggedIn, function(req, res) {
+                  if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+
+    async.forEachOf(corp.Forum, function(value, key, callback) {
+                   if (value._id == req.params.id)
+                   {
+                    console.log("matched forum post");
+                    var postItem = new Forum();
+          postItem.Title = req.param('title');
+          postItem.Body = req.param('body');
+          postItem.Author = req.param('author');
+
+corp.Forum[key].Answers.push(postItem);
+corp.save(function (err) {////////////////////////////////////
+  if (!err) console.log('Success!');
+});
+console.log("pushed post");
+console.log(corp.Forum[key].Answers);
+                   }
+                      callback();  
+                    
+                }, function(err) {
+                    if (err) console.error(err.message);
+                   // res.redirect('/forum/'+ req.params.id);
+                })
+        })
+    });
 
 
                     app.get('/wiki',isLoggedIn, function(req, res) {
