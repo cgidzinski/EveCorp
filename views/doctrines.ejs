@@ -12,16 +12,22 @@
                            <br>
                            <% for(var i=0; i < corp.Doctrines.length; i++) { %>
 <div class="well" >
+      <div class="post-header">
+        <h4 class="charcoal"><%= corp.Doctrines[i].Title %></h4>
+        <h5><%= corp.Doctrines[i].Time %></h5>
+      </div>
   <img src="https://image.eveonline.com/Type/<%= corp.Doctrines[i].ShipID %>_64.png"><br>
-                  <h3 class="red"><%= corp.Doctrines[i].Title %></h3><br>
                   <code class="red"><%= corp.Doctrines[i].About %></code>
                   <pre class="red"><%= corp.Doctrines[i].Body %></pre>
-                  <h6 class="red"><%= corp.Doctrines[i].Time %></h6>
                   <h6 class="red"><%= corp.Doctrines[i].ShipID %></h6>
                   <h6 class="red"><%= corp.Doctrines[i]._id %></h6>
-                  <% if (user.CharacterRoleLevel >= 4) { %>
-                  <a href="/deletedoctrine/<%= corp.Doctrines[i]._id %>">Delete</a>
-                  <% } %>
+<div class="post-footer">
+        <h5><%= corp.Doctrines[i]._id %></h5>
+        <h5 class="controls">
+        <% if (user.CharacterRoleLevel >= 4) { %>
+          <a href="/deleteannouncement/<%= corp.Doctrines[i]._id %>">Delete</a><% } %>
+        </h5>
+      </div>
 </div>
 
 
