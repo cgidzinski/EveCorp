@@ -5,6 +5,7 @@ var Doctrine = require('../models/doctrine');
 var Ping = require('../models/ping');
 var Wiki = require('../models/wiki');
 var Item = require('../models/item');
+var Forum = require('../models/forum');
 
 
 function isLoggedIn(req, res, next) {
@@ -64,6 +65,34 @@ Item.find({}, function(err, items) {
           });
         })
     });
+
+
+var async = require('async');
+
+                app.get('/forum/:id',isLoggedIn, function(req, res) {
+                  if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+
+    async.forEachOf(corp.Forum, function(value, key, callback) {
+                   if (value._id == req.params.id)
+                   {
+                    console.log(value);
+                       res.render('forumpost.ejs', {
+                user: req.user,
+                post:value,
+                corp: corp
+            });
+                   }
+                      callback();  
+                    
+                }, function(err) {
+                    if (err) console.error(err.message);
+                })
+        })
+    });
+
+
+
                     app.get('/wiki',isLoggedIn, function(req, res) {
    Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
             res.render('wiki.ejs', {
@@ -152,6 +181,14 @@ corp.save();
             });
         })
     });
+                                app.get('/forum',isLoggedIn, function(req, res) {
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+            res.render('forum.ejs', {
+                user: req.user,
+                corp: corp
+            });
+        })
+    });
 
                 app.get('/deleteping/:id',isLoggedIn, function(req, res) {
                   if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
@@ -212,7 +249,19 @@ corp.save();
         })
     });
 
-
+                app.get('/deleteforum/:id',isLoggedIn, function(req, res) {
+                  if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+for (var i = corp.Forum.length - 1; i >= 0; i--) {
+  if (corp.Forum[i]._id == req.params.id)
+  {
+corp.Forum.splice(i, 1);
+corp.save();
+}
+}
+            res.redirect('/forum');
+        })
+    });
 
        app.get('/administrative',isLoggedIn, function(req, res) {
         if (req.user.CharacterRoleLevel >= 4)
@@ -270,6 +319,21 @@ res.redirect('/pings');
     }
   });
 
+  app.post('/newforum', isLoggedIn, function(req, res) {
+    if (req.user.CharacterRoleLevel >= 4) {
+var forumItem = new Forum();
+          forumItem.Title = req.param('title');
+          forumItem.Body = req.param('body');
+          forumItem.Author = req.param('author');
+  Corporation.findOne({CorporationID:req.user.CharacterCorporationID},{'Forum':1}, function(err, corp) {
+corp.Forum.push(forumItem);
+corp.save();
+res.redirect('/forum');
+       });
+    } else {
+      res.redirect('/');
+    }
+  });
 
   app.post('/newtimer', isLoggedIn, function(req, res) {
     if (req.user.CharacterRoleLevel >= 4) {

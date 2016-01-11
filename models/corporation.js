@@ -10,6 +10,7 @@ var corporationSchema = mongoose.Schema({
         Announcements             : [],
         Wikis           		  : [],
         Timers           		  : [],
+        Forum           		  : [],
         Doctrines          		  : []
 });
 

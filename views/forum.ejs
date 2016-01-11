@@ -1,0 +1,37 @@
+<!doctype html>
+
+<head>
+  <title>Eve Corporation Manager | Forum</title>
+  <%= include /partials/header.ejs %>
+  <link rel="stylesheet" href="/css/admin.css" type="text/css">
+</head>
+<body>
+  <%= include /partials/sidebar.ejs %>
+  <div class="tab-content">
+    <h3>Forums [<%= corp.Forum.length %>]</h3>
+    <br>
+    <% for(var i=0; i < corp.Forum.length; i++) { %>
+    <div class="well">
+      <div class="post-header">
+        <h4 class="charcoal"><%= corp.Forum[i].Title %></h4>
+        <h5><%= corp.Forum[i].Time %></h5>
+      </div>
+      <div class="post-body"><div>
+        <%= corp.Forum[i].Body %> <a href="/forum/<%= corp.Forum[i]._id %>">Follow</a>
+        </div>
+      </div>
+      <div class="post-footer">
+        <h5><%= corp.Forum[i].Author %></h5>
+        <h5><%= corp.Forum[i]._id %></h5>
+        <h5 class="controls">
+        <% if (user.CharacterRoleLevel >= 4) { %>
+          <a href="/deleteforum/<%= corp.Forum[i]._id %>">Delete</a><% } %>
+        </h5>
+      </div>
+    </div>
+    <% } %>
+</div>
+</body>
+<%= include /partials/footer.ejs %>
+
+</html>

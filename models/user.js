@@ -14,6 +14,7 @@ var userSchema = mongoose.Schema({
         CharacterAllianceID     : {type: String, default: "" },
         CharacterAlliance       : {type: String, default: "" },
         CharacterID             : {type: Number, default: "" },
+        Points                  : {type: Number, default: "" },
         accessToken             : {type: String, default: "" }
 });
 

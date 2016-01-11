@@ -24,6 +24,18 @@
                       <br>
 
        <hr>
+                                  <br>
+                           <h3>New Forum Post</h3>
+                          <form method="post" action="/newforum" name="post-form" id="post-form">
+                    <div class="info extended"><div class="field">Title</div><input class="title" name="title" type="text" autocomplete="off" value="Some Title"></div>
+                    <div class="info extended"><div class="field">Body</div><input class="body" name="body" type="text" autocomplete="off" value="Some Body"></div>
+                    <input class="author" name="author" type="text" autocomplete="off" value="<%= user._id %>" hidden>
+                    <br>
+                    <button class="btn btn-danger update-submit button">Push New Forum Item</button>
+                    </form>
+                      <br>
+
+       <hr>
                            <br>
                            <h3>New Ping</h3>
                           <form method="post" action="/newping" name="ping-form" id="ping-form">
