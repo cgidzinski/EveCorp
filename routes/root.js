@@ -5,7 +5,6 @@ var Announcement = require('../models/announcement');
 var Doctrine = require('../models/doctrine');
 var Ping = require('../models/ping');
 var Wiki = require('../models/wiki');
-var Item = require('../models/item');
 var Forum = require('../models/forum');
 
 
@@ -38,32 +37,30 @@ var array=[];
 
 var csv = require("fast-csv");
  
-const fs = require('fs');
-if (done == false)
-{
- var stream = fs.createReadStream("./public/typeids.csv");
-csv
- .fromStream(stream, {ignoreEmpty: true})
- .on("data", function(data){
-     array.push(data[1].trim() +" ("+data[0]+")");
- })
- .on("end", function(){
-     console.log("Loaded Search");
-     done = true;
- })
-  .on("error", function(data){
-     console.log(data);
- });
-}
+// const fs = require('fs');
+// if (done == false)
+// {
+//  var stream = fs.createReadStream("./public/typeids.csv");
+// csv
+//  .fromStream(stream, {ignoreEmpty: true})
+//  .on("data", function(data){
+//      array.push(data[1].trim() +" ("+data[0]+")");
+//  })
+//  .on("end", function(){
+//      console.log("Loaded Search");
+//      done = true;
+//  })
+//   .on("error", function(data){
+//      console.log(data);
+//  });
+// }
 
-Item.find({}, function(err, items) {
             res.render('dashboard.ejs', {
                 user: req.user,
-                items:items,
                 corp: corp,
                 data: array
             });
-          });
+          
         })
     });
 
@@ -91,34 +88,54 @@ Item.find({}, function(err, items) {
     });
 
 
-                app.post('/newforumpost/:id',isLoggedIn, function(req, res) {
-                  if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
-   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+//                 app.post('/newforumpost/:id',isLoggedIn, function(req, res) {
+//                   if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
+                  
+//    Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
 
-    async.forEachOf(corp.Forum, function(value, key, callback) {
-                   if (value._id == req.params.id)
-                   {
-                    console.log("matched forum post");
-                    var postItem = new Forum();
-          postItem.Title = req.param('title');
-          postItem.Body = req.param('body');
-          postItem.Author = req.param('author');
 
-corp.Forum[key].Answers.push(postItem);
-corp.save(function (err) {////////////////////////////////////
-  if (!err) console.log('Success!');
-});
-console.log("pushed post");
-console.log(corp.Forum[key].Answers);
-                   }
-                      callback();  
-                    
-                }, function(err) {
-                    if (err) console.error(err.message);
-                   // res.redirect('/forum/'+ req.params.id);
-                })
-        })
-    });
+// // Corporation.update({CorporationID:req.user.CharacterCorporationID},{$push:{CorporationName: 'lol'}});
+
+
+
+
+// //      for (var i = corp.Forum.length - 1; i >= 0; i--) {
+// //                             if (corp.Forum[i]._id == req.params.id) {
+                             
+// // //corp.Forum[i].Answers.push(postItem); 
+// // //corp.Forum[0].Answers[0].push(postItem);
+// // // var postItem = new Comment();
+// // //             postItem.Title = req.param('title');
+// // //             postItem.Body = req.param('body');
+// // //             postItem.Author = req.param('author');
+// //             corp.Forum[i].Answers.push({ name: 'My Pens' });
+// // //console.log(postItem);
+// //       // corp.markModified('Answers');
+// //       corp.save();
+      
+// // }
+     
+// res.redirect('/forum/'+ req.params.id);
+
+               
+//         });
+//     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                     app.get('/wiki',isLoggedIn, function(req, res) {

@@ -4,8 +4,8 @@ var bcrypt   = require('bcrypt-nodejs');
 
 var corporationSchema = mongoose.Schema({
 
-        CorporationName           : {type: String, default: "" },
-        CorporationID             : {type: String, default: "" },
+        CorporationName           : String,
+        CorporationID             : String,
         Pings           		  : [],
         Announcements             : [],
         Wikis           		  : [],
