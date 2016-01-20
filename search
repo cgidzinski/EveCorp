@@ -1,0 +1,77 @@
+                      app.get('/dashboard',isLoggedIn, function(req, res) {
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
+
+     var done = false;
+var array=[];
+
+var csv = require("fast-csv");
+ 
+const fs = require('fs');
+if (done == false)
+{
+ var stream = fs.createReadStream("./public/typeids.csv");
+csv
+ .fromStream(stream, {ignoreEmpty: true})
+ .on("data", function(data){
+     array.push(data[1].trim() +" ("+data[0]+")");
+ })
+ .on("end", function(){
+     console.log("Loaded Search");
+     done = true;
+ })
+  .on("error", function(data){
+     console.log(data);
+ });
+}
+
+            res.render('dashboard.ejs', {
+                user: req.user,
+                corp: corp,
+                data: array
+            });
+          
+        })
+    });
+
+
+                      ////
+                              <script type="text/javascript">
+$(function() {
+
+  var availableTags = ("<%= data %>").split(",");
+  
+  $(".autocomplete").autocomplete({
+    source: availableTags
+  });
+});
+
+    </script>
+    <style type="text/css">
+
+.ui-autocomplete {
+    position: absolute;
+    z-index: 1000;
+    cursor: default;
+    padding: 0;
+    margin-top: 2px;
+    list-style: none;
+    background-color: #ffffff;
+    border: 1px solid #ccc
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+       -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.ui-autocomplete > li {
+  padding: 3px 20px;
+}
+.ui-autocomplete > li.ui-state-focus {
+  background-color: #DDD;
+}
+.ui-helper-hidden-accessible {
+  display: none;
+}
+
+    </style>

@@ -11,79 +11,55 @@
                       <img src="https://image.eveonline.com/Corporation/<%= corp.CorporationID %>_256.png">
                       <h3><%= corp.CorporationName %></h3>
                       <br>
-<br>Wiki's: <%= corp.Wikis.length %>
-<br>Announcements's: <%= corp.Announcements.length %>
-<br>Pings's: <%= corp.Pings.length %>
-<br>Doctrines's: <%= corp.Doctrines.length %>
- 
 
-
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.js"></script>
-<script src="//jquery-csv.googlecode.com/files/jquery.csv-0.71.js"></script>
-
-<code>
+<!-- <pre>
 TODO:
 buy/sell/request
 shipping
 fleets
 help/forum with points for answered q's
 calculators
-
-</code>
-<div class="container">
-
-  <div class="form-group">
-    <label>Item Search</label>
-    <input class="form-control autocomplete" placeholder="Enter A" />
-  </div>
+</pre>
+  
+ -->
 
 
-</div>
+    <h3>Announcements [<%= corp.Announcements.length %>]</h3>
+    <br>
+    <% for(var i=0; i < corp.Announcements.length; i++) { %>
+    <div class="well">
+      <div class="post-header">
+        <h4 class="charcoal"><%= corp.Announcements[i].Title %></h4>
+        <h5><%= corp.Announcements[i].Time %></h5>
+      </div>
+      <div class="post-body"><div>
+        <%= corp.Announcements[i].Body %>
+        </div>
+      </div>
+      <div class="post-footer">
+        <h5><%= corp.Announcements[i].Author %></h5>
+        <h5><%= corp.Announcements[i]._id %></h5>
+        <h5 class="controls">
+        <% if (user.CharacterRoleLevel >= 4) { %>
+          <a href="/deleteannouncement/<%= corp.Announcements[i]._id %>">Delete</a><% } %>
+        </h5>
+      </div>
+    </div>
+    <% } %>
+    <hr>
+                           <h3>New Announcement</h3>
+                          <form method="post" action="/newannouncement" name="announcement-form" id="announcement-form">
+                    <div class="info extended"><div class="field">Title</div><input class="title" name="title" type="text" autocomplete="off" value="Some Title"></div>
+                    <div class="info extended"><div class="field">Body</div><input class="body" name="body" type="text" autocomplete="off" value="Some Body"></div>
+                    <input class="author" name="author" type="text" autocomplete="off" value="<%= user._id %>" hidden>
+                    <br>
+                    <button class="btn btn-danger update-submit button">Push New Announcement</button>
+                    </form>
+                      <br>
+
                     </div>
             
 </body>
 <%= include /partials/footer.ejs %>
 
     </html>
-        <script type="text/javascript">
-$(function() {
-
-  var availableTags = ("<%= data %>").split(",");
-  
-  $(".autocomplete").autocomplete({
-    source: availableTags
-  });
-});
-
-    </script>
-    <style type="text/css">
-
-.ui-autocomplete {
-    position: absolute;
-    z-index: 1000;
-    cursor: default;
-    padding: 0;
-    margin-top: 2px;
-    list-style: none;
-    background-color: #ffffff;
-    border: 1px solid #ccc
-    -webkit-border-radius: 5px;
-       -moz-border-radius: 5px;
-            border-radius: 5px;
-    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-       -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-}
-.ui-autocomplete > li {
-  padding: 3px 20px;
-}
-.ui-autocomplete > li.ui-state-focus {
-  background-color: #DDD;
-}
-.ui-helper-hidden-accessible {
-  display: none;
-}
-
-    </style>

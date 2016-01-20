@@ -51,9 +51,9 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 app.use(favicon(__dirname + '/public/favicon.ico'));
 // routes ======================================================================
-
 require('./routes/root.js')(app, passport);
-
+require('./routes/forum.js')(app, passport);
+require('./routes/404.js')(app, passport);
 // launch ======================================================================
 http.listen(port);
 console.log('The magic happens on port ' + port);

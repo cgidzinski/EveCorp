@@ -12,7 +12,7 @@
   <%= include /partials/sidebar.ejs %>
   <div class="tab-content">
     <h3>Wikis [<%= corp.Wikis.length %>]</h3>
-    <br>
+    <hr><br>
     <% for(var i=0; i < corp.Wikis.length; i++) { %>
     <div class="well">
       <div class="post-header">
@@ -33,6 +33,17 @@
       </div>
     </div>
     <% } %>
+                           <hr>
+                           
+                           <h3>New Wiki</h3>
+                          <form method="post" action="/newwiki" name="wiki-form" id="wiki-form">
+                    <div class="info extended"><div class="field">Title</div><input class="title" name="title" type="text" autocomplete="off" value="Some Title"></div>
+                    <div class="info extended"><div class="field">Body</div><input class="body" name="body" type="text" autocomplete="off" value="Some Body"></div>
+                    <input class="author" name="author" type="text" autocomplete="off" value="<%= user._id %>" hidden>
+                    <br>
+                    <button class="btn btn-danger update-submit button">Push New Wiki</button>
+                    </form>
+                      <br>
 </div>
 </body>
 <%= include /partials/footer.ejs %>

@@ -5,6 +5,7 @@ var Announcement = require('../models/announcement');
 var Doctrine = require('../models/doctrine');
 var Ping = require('../models/ping');
 var Wiki = require('../models/wiki');
+var Timer = require('../models/timer');
 var Forum = require('../models/forum');
 
 
@@ -32,107 +33,14 @@ module.exports = function(app, passport) {
                       app.get('/dashboard',isLoggedIn, function(req, res) {
    Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
 
-     var done = false;
-var array=[];
-
-var csv = require("fast-csv");
- 
-// const fs = require('fs');
-// if (done == false)
-// {
-//  var stream = fs.createReadStream("./public/typeids.csv");
-// csv
-//  .fromStream(stream, {ignoreEmpty: true})
-//  .on("data", function(data){
-//      array.push(data[1].trim() +" ("+data[0]+")");
-//  })
-//  .on("end", function(){
-//      console.log("Loaded Search");
-//      done = true;
-//  })
-//   .on("error", function(data){
-//      console.log(data);
-//  });
-// }
 
             res.render('dashboard.ejs', {
                 user: req.user,
-                corp: corp,
-                data: array
+                corp: corp
             });
           
         })
     });
-
-
-
-
-                app.get('/forum/:id',isLoggedIn, function(req, res) {
-   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
-
-    async.forEachOf(corp.Forum, function(value, key, callback) {
-                   if (value._id == req.params.id)
-                   {
-                       res.render('forumpost.ejs', {
-                user: req.user,
-                post:value,
-                corp: corp
-            });
-                   }
-                      callback();  
-                    
-                }, function(err) {
-                    if (err) console.error(err.message);
-                })
-        })
-    });
-
-
-//                 app.post('/newforumpost/:id',isLoggedIn, function(req, res) {
-//                   if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
-                  
-//    Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
-
-
-// // Corporation.update({CorporationID:req.user.CharacterCorporationID},{$push:{CorporationName: 'lol'}});
-
-
-
-
-// //      for (var i = corp.Forum.length - 1; i >= 0; i--) {
-// //                             if (corp.Forum[i]._id == req.params.id) {
-                             
-// // //corp.Forum[i].Answers.push(postItem); 
-// // //corp.Forum[0].Answers[0].push(postItem);
-// // // var postItem = new Comment();
-// // //             postItem.Title = req.param('title');
-// // //             postItem.Body = req.param('body');
-// // //             postItem.Author = req.param('author');
-// //             corp.Forum[i].Answers.push({ name: 'My Pens' });
-// // //console.log(postItem);
-// //       // corp.markModified('Answers');
-// //       corp.save();
-      
-// // }
-     
-// res.redirect('/forum/'+ req.params.id);
-
-               
-//         });
-//     });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -226,14 +134,7 @@ corp.save();
             });
         })
     });
-                                app.get('/forum',isLoggedIn, function(req, res) {
-   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
-            res.render('forum.ejs', {
-                user: req.user,
-                corp: corp
-            });
-        })
-    });
+
 
                 app.get('/deleteping/:id',isLoggedIn, function(req, res) {
                   if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
@@ -248,14 +149,6 @@ corp.save();
             res.redirect('/pings');
         })
     });
-                    app.get('/announcements',isLoggedIn, function(req, res) {
-   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
-            res.render('announcements.ejs', {
-                user: req.user,
-                corp: corp
-            });
-        })
-    });
 
                 app.get('/deleteannouncement/:id',isLoggedIn, function(req, res) {
                   if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
@@ -267,7 +160,7 @@ corp.Announcements.splice(i, 1);
 corp.save();
 }
 }
-            res.redirect('/announcements');
+            res.redirect('/dashboard');
         })
     });
                         app.get('/doctrines',isLoggedIn, function(req, res) {
@@ -294,19 +187,7 @@ corp.save();
         })
     });
 
-                app.get('/deleteforum/:id',isLoggedIn, function(req, res) {
-                  if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
-   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
-for (var i = corp.Forum.length - 1; i >= 0; i--) {
-  if (corp.Forum[i]._id == req.params.id)
-  {
-corp.Forum.splice(i, 1);
-corp.save();
-}
-}
-            res.redirect('/forum');
-        })
-    });
+               
 
        app.get('/administrative',isLoggedIn, function(req, res) {
         if (req.user.CharacterRoleLevel >= 4)
@@ -364,21 +245,7 @@ res.redirect('/pings');
     }
   });
 
-  app.post('/newforum', isLoggedIn, function(req, res) {
-    if (req.user.CharacterRoleLevel >= 4) {
-var forumItem = new Forum();
-          forumItem.Title = req.param('title');
-          forumItem.Body = req.param('body');
-          forumItem.Author = req.param('author');
-  Corporation.findOne({CorporationID:req.user.CharacterCorporationID},{'Forum':1}, function(err, corp) {
-corp.Forum.push(forumItem);
-corp.save();
-res.redirect('/forum');
-       });
-    } else {
-      res.redirect('/');
-    }
-  });
+ 
 
   app.post('/newtimer', isLoggedIn, function(req, res) {
     if (req.user.CharacterRoleLevel >= 4) {
@@ -406,7 +273,7 @@ var announcementItem = new Announcement();
   Corporation.findOne({CorporationID:req.user.CharacterCorporationID},{'Announcements':1}, function(err, corp) {
 corp.Announcements.push(announcementItem);
 corp.save();
-res.redirect('/announcements');
+res.redirect('/dashboard');
        });
     } else {
       res.redirect('/');
@@ -446,10 +313,5 @@ res.redirect('/doctrines');
       res.redirect('/');
     }
   });
-
-
-//
-app.get('*', function(req, res){
-   res.send("...Jita's that way", 404);
- });          
+      
 }
