@@ -47,9 +47,16 @@ module.exports = function(app, passport) {
                   
    Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
 // Corporation.update({CorporationID:req.user.CharacterCorporationID},{$push:{CorporationName: 'lol'}});
-//      for (var i = corp.Forum.length - 1; i >= 0; i--) {
-//                             if (corp.Forum[i]._id == req.params.id) {
-                             
+      for (var i = corp.Forum.length - 1; i >= 0; i--) {
+                             if (corp.Forum[i]._id == req.params.id) {
+
+console.log("Found post titled:" + corp.Forum[i].Title)
+var comment={name:"lol"};
+corp.Forum[i].Answers.push(comment);
+console.log(corp.Forum[i].Answers);
+corp.markModified('Answers');
+corp.save();
+}                             
 // //corp.Forum[i].Answers.push(postItem); 
 // //corp.Forum[0].Answers[0].push(postItem);
 // // var postItem = new Comment();
@@ -61,7 +68,7 @@ module.exports = function(app, passport) {
 //       // corp.markModified('Answers');
 //       corp.save();
       
-// }
+ }
      
 res.redirect('/forum/'+ req.params.id);               
         });
