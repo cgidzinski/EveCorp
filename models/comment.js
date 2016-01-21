@@ -7,7 +7,7 @@ var commentSchema = mongoose.Schema({
    							        Title           : {type: String, default: "" },
 							        Author          : {type: String, default: "" },
 							        Body            : {type: String, default: "" },
-							        Category        : {type: Boolean, default: "" },
+							        Best            : {type: Boolean, default: false },
 });
 module.exports = mongoose.model('Comment', commentSchema);
 

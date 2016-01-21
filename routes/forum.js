@@ -44,19 +44,19 @@ module.exports = function(app, passport) {
 
                 app.post('/newforumpost/:id',isLoggedIn, function(req, res) {
                   if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
-                  
    Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
 // Corporation.update({CorporationID:req.user.CharacterCorporationID},{$push:{CorporationName: 'lol'}});
       for (var i = corp.Forum.length - 1; i >= 0; i--) {
                              if (corp.Forum[i]._id == req.params.id) {
-
 console.log("Found post titled:" + corp.Forum[i].Title)
 //Works but not really adding document
+//
 // var comment={Title:req.param('title'),Body:req.param('body'),Author:req.param('author')};
 // corp.Forum[i].Answers.push(comment);
 //corp.markModified('Forum');
 //
 //Doesnt work adding document
+//
 var postItem = new Comment();
             postItem.Title = req.param('title');
             postItem.Body = req.param('body');
@@ -67,7 +67,6 @@ console.log(corp.Forum[i].Answers);
 corp.save();
 }                              
  }
-     
 res.redirect('/forum/'+ req.params.id);               
         });
     });
