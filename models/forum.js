@@ -1,8 +1,7 @@
 // load the things we need
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
-
-// define the schema for our user model
+var Comment = require('../models/comment');
 
 var forumSchema = mongoose.Schema({
 
@@ -10,9 +9,7 @@ var forumSchema = mongoose.Schema({
         Author          : {type: String, default: "" },
         Body            : {type: String, default: "" },
         Category        : {type: String, default: "" },
-        Answers         :[{
-    name: String
- }],
+        Answers         :[Comment],
         Answered        : {type: Boolean, default: false },
         Time            :{ type: Date, default: Date.now }
 });

@@ -7,7 +7,7 @@ var Ping = require('../models/ping');
 var Wiki = require('../models/wiki');
 var Timer = require('../models/timer');
 var Forum = require('../models/forum');
-
+var Comment = require('../models/comment');
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) return next();
@@ -51,23 +51,21 @@ module.exports = function(app, passport) {
                              if (corp.Forum[i]._id == req.params.id) {
 
 console.log("Found post titled:" + corp.Forum[i].Title)
-var comment={name:"lol"};
-corp.Forum[i].Answers.push(comment);
+//Works but not really adding document
+// var comment={Title:req.param('title'),Body:req.param('body'),Author:req.param('author')};
+// corp.Forum[i].Answers.push(comment);
+//corp.markModified('Forum');
+//
+//Doesnt work adding document
+var postItem = new Comment();
+            postItem.Title = req.param('title');
+            postItem.Body = req.param('body');
+            postItem.Author = req.param('author');
+corp.Forum[i].Answers.push(postItem);
+//
 console.log(corp.Forum[i].Answers);
-corp.markModified('Answers');
 corp.save();
-}                             
-// //corp.Forum[i].Answers.push(postItem); 
-// //corp.Forum[0].Answers[0].push(postItem);
-// // var postItem = new Comment();
-// //             postItem.Title = req.param('title');
-// //             postItem.Body = req.param('body');
-// //             postItem.Author = req.param('author');
-//             corp.Forum[i].Answers.push({ name: 'My Pens' });
-// //console.log(postItem);
-//       // corp.markModified('Answers');
-//       corp.save();
-      
+}                              
  }
      
 res.redirect('/forum/'+ req.params.id);               
