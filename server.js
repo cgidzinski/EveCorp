@@ -34,8 +34,16 @@ if ('OPTIONS' == req.method) {
 // configuration ===============================================================
 mongoose.connect(config.url); // connect to our database
 app.set('superSecret', config.secret); // secret variable
+// console.log(app.settings.views);
+ if (app.settings.views == "/opt/bitnami/apps/EveCorp/views")
+ {
+require('./controllers/passport2')(passport); // pass passport for configuration
+ }
+ else
+ {
+ 	require('./controllers/passport')(passport); // pass passport for configuration
+ }
 
-require('./controllers/passport')(passport); // pass passport for configuration
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
@@ -56,6 +64,6 @@ require('./routes/forum.js')(app, passport);
 require('./routes/404.js')(app, passport);
 // launch ======================================================================
 mongoose.set('debug', true);
-console.log(app);
+
 http.listen(port);
 console.log('The magic happens on port ' + port);

@@ -35,7 +35,7 @@ var remotecallback="http://lan-ce:8081/auth/eveonline/callback"
 var remoteagent='http://lan-ce.com:8081/'
 var remoteid="507736f9caf04913ba84ac432a350a82"
 var remotesecret="eB7u3befgw1nrQGe7GACNvcT9D7aKCDtgExCFZCy"
-if (true)
+if (false)
 {
 ENVid=localid;
 ENVsecret=localsecret;
