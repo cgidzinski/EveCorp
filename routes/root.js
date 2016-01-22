@@ -187,14 +187,34 @@ corp.save();
         })
     });
 
+
+
+
+  // app.get('/admin/users', isLoggedIn, function(req, res) {
+  //   if (req.user.local.group == "admin" || req.user.local.group == "staff") {
+  //     User.find({}, {
+  //       'local.password': 0,
+  //     }, function(err, users) {
+  //       res.render('admin/admin_users.ejs', {
+  //         user: req.user,
+  //         userList: users
+  //       });
+  //     })
+  //   } else {
+  //     res.redirect('/');
+  //   }
+  // }); 
                
 
        app.get('/administrative',isLoggedIn, function(req, res) {
         if (req.user.CharacterRoleLevel >= 4)
         {
-                res.render('administrative.ejs', {
-         user: req.user
+          User.find({CharacterCorporationID:req.user.CharacterCorporationID},{_id:1,CharacterRole:1,CharacterRoleLevel:1,CharacterName:1},function(err, users){
+          res.render('administrative.ejs', {
+         user: req.user,
+         userList: users
        });
+          });
         }
         else
         {
