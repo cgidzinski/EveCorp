@@ -34,8 +34,8 @@ passport.deserializeUser(function(id, done) {
      //callbackURL: "http://lan-ce.com/auth/eveonline/callback",
     // userAgent: 'http://lan-ce.com/'
 
-      callbackURL: "http://localhost:8080/auth/eveonline/callback",
-      userAgent: 'http://localhost:8080/'
+      callbackURL: "http://localhost:8081/auth/eveonline/callback",
+      userAgent: 'http://localhost:8081/'
     },
       function(accessToken, refreshToken, profile, done) {
 
