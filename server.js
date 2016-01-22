@@ -56,5 +56,6 @@ require('./routes/forum.js')(app, passport);
 require('./routes/404.js')(app, passport);
 // launch ======================================================================
 mongoose.set('debug', true);
+console.log(app);
 http.listen(port);
 console.log('The magic happens on port ' + port);
