@@ -14,22 +14,14 @@
     <div class="well">
       <a href="/forum/<%= corp.Forum[i]._id %>">
       <div class="post-header">
-        <h4 class="charcoal"><%= corp.Forum[i].Title %></h4>
+        <h4 class="charcoal"><%= corp.Forum[i].Title %> [<%= corp.Forum[i].Answers.length %>]</h4>
         <h5><%= corp.Forum[i].Time %></h5>
-      </div></a>
-<!--       <div class="post-body"><div>
-        <%= corp.Forum[i].Body %> <a href="/forum/<%= corp.Forum[i]._id %>">Follow</a>
-        </div>
-      </div>
-      <div class="post-footer">
-        <h5><%= corp.Forum[i].Author %></h5>
-        <h5><%= corp.Forum[i]._id %></h5>
+      </div></a> 
+          <div class="post-footer">
         <h5 class="controls">
-        <% if (user.CharacterRoleLevel >= 4) { %>
-          <a href="/deleteforum/<%= corp.Forum[i]._id %>">Delete</a><% } %>
+        <% if (user.CharacterRoleLevel >= 4) { %><a href="/deleteforum/<%= corp.Forum[i]._id %>">Delete</a><% } %>
         </h5>
-      </div> -->
-    </div>
+      </div></div>
     <% } %>
 
 

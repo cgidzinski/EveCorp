@@ -111,7 +111,50 @@ corp.save();
             res.redirect('/forum');
         })
     });
+// /deletepostanswer/<%= post._id%>/<%= post.Answers[i]._id %>
+                app.get('/deletepostanswer/:forumid/:postid',isLoggedIn, function(req, res) {
+                  if (req.user.CharacterRoleLevel < 4) {res.send('Permission Denied');}
+   Corporation.findOne({CorporationID:req.user.CharacterCorporationID}, function(err, corp) {
 
+
+
+
+
+for (var i = corp.Forum.length - 1; i >= 0; i--) {
+
+  if (corp.Forum[i]._id == req.params.forumid)
+  {
+
+
+
+
+    for (var x = corp.Forum[i].Answers.length - 1; x >= 0; x--) {
+       if (corp.Forum[i].Answers[x]._id == req.params.postid)
+   {
+    console.log(corp.Forum[i].Answers[x]);
+corp.Forum[i].Answers.splice(x, 1);
+corp.markModified('Forum');
+corp.save();
+ }
+
+}
+
+}
+
+
+
+}
+
+
+
+
+ 
+
+
+
+            res.redirect('/forum/'+req.params.forumid);
+        })
+    });
       
 
 

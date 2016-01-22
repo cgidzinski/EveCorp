@@ -8,7 +8,7 @@
 <body>
   <%= include /partials/sidebar.ejs %>
   <div class="tab-content">
-    <h2>Title <%= post.Title%></h2>[<%= post.Answers%>]
+    <h2>Title <%= post.Title%></h2>
 <hr>  
     <h3>Answers [<%= post.Answers.length %>]</h3>
     <br>
@@ -18,7 +18,8 @@
         <h4 class="charcoal"><%= post.Answers[i].Title %></h4>
         <h5><%= post.Answers[i].Time %></h5>
       </div>
-      <div class="post-body"><div>
+      <div class="post-body">
+        <div>
         <%= post.Answers[i].Body %>
         </div>
       </div>
@@ -27,8 +28,7 @@
         <h5>AuthorID:<%= post.Answers[i].Author %></h5>
         <h5>PostID:<%= post.Answers[i]._id %></h5>
         <h5 class="controls">
-        <% if (user.CharacterRoleLevel >= 4) { %>
-          <a href="/deletepostanswer/<%= post.Answers[i]._id %>">Delete</a><% } %>
+        <% if (user.CharacterRoleLevel >= 4) { %><a href="/deletepostanswer/<%= post._id%>/<%= post.Answers[i]._id %>">Delete</a><% } %>
         </h5>
       </div>
     </div>
