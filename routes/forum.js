@@ -7,7 +7,7 @@ var Ping = require('../models/ping');
 var Wiki = require('../models/wiki');
 var Timer = require('../models/timer');
 var Forum = require('../models/forum');
-var Comment = require('../models/comment');
+mongoose = require('mongoose');
 
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) return next();
@@ -48,25 +48,25 @@ module.exports = function(app, passport) {
 // Corporation.update({CorporationID:req.user.CharacterCorporationID},{$push:{CorporationName: 'lol'}});
       for (var i = corp.Forum.length - 1; i >= 0; i--) {
                              if (corp.Forum[i]._id == req.params.id) {
-console.log("Found post titled:" + corp.Forum[i].Title)
 //Works but not really adding document
 //
-// var comment={Title:req.param('title'),Body:req.param('body'),Author:req.param('author')};
-// corp.Forum[i].Answers.push(comment);
-//corp.markModified('Forum');
+var comment={_id:mongoose.Types.ObjectId(),Title:req.param('title'),Body:req.param('body'),Author:req.param('author'),Best:false,Time:Date()};
+corp.Forum[i].Answers.push(comment);
+corp.markModified('Forum');
 //
 //Doesnt work adding document
 //
-var postItem = new Comment();
-            postItem.Title = req.param('title');
-            postItem.Body = req.param('body');
-            postItem.Author = req.param('author');
-corp.Forum[i].Answers.push(postItem);
+// var postItem = new Comment();
+//             postItem.Title = req.param('title');
+//             postItem.Body = req.param('body');
+//             postItem.Author = req.param('author');
+// corp.Forum[i].Answers.push(postItem);
 //
 console.log(corp.Forum[i].Answers);
-corp.save();
+ corp.save();
 }                              
  }
+
 res.redirect('/forum/'+ req.params.id);               
         });
     });

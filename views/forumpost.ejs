@@ -23,9 +23,9 @@
         </div>
       </div>
       <div class="post-footer">
-        <h5><%= post.Answers[i].Best %></h5>
-        <h5><%= post.Answers[i].Author %></h5>
-        <h5><%= post.Answers[i]._id %></h5>
+        <h5>Best:<%= post.Answers[i].Best %></h5>
+        <h5>AuthorID:<%= post.Answers[i].Author %></h5>
+        <h5>PostID:<%= post.Answers[i]._id %></h5>
         <h5 class="controls">
         <% if (user.CharacterRoleLevel >= 4) { %>
           <a href="/deletepostanswer/<%= post.Answers[i]._id %>">Delete</a><% } %>
