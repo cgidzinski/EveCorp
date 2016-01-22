@@ -26,34 +26,11 @@ passport.deserializeUser(function(id, done) {
     // =========================================================================
     // LOCAL SIGNUP ============================================================
     // =========================================================================
-var localcallback ="http://localhost:8081/auth/eveonline/callback"
-var localagent='http://localhost:8081/'
-var localid="a6d649dbe7724629af5900aa20c186f4"
-var localsecret="6dutMnDMCGvAAWGGbFacQ7u3pEenBDD1VZjxlI9I"
-
-var remotecallback="http://lan-ce:8081/auth/eveonline/callback"
-var remoteagent='http://lan-ce.com:8081/'
-var remoteid="507736f9caf04913ba84ac432a350a82"
-var remotesecret="eB7u3befgw1nrQGe7GACNvcT9D7aKCDtgExCFZCy"
-if (true)
-{
-ENVid=localid;
-ENVsecret=localsecret;
-ENVcallback=localcallback;
-ENVagent=localagent;
-}
-else
-{
-ENVid=remoteid;
-ENVsecret=remotesecret;
-ENVcallback=remotecallback;
-ENVagent=remoteagent;
-}
    passport.use('eveonline', new EveOnlineStrategy({
-    clientID: ENVid,
-    clientSecret: ENVsecret,
-      callbackURL: ENVcallback,
-      userAgent: ENVagent
+    clientID: "a6d649dbe7724629af5900aa20c186f4",
+    clientSecret: "6dutMnDMCGvAAWGGbFacQ7u3pEenBDD1VZjxlI9I",
+      callbackURL: "http://localhost:8081/auth/eveonline/callback",
+      userAgent: 'http://localhost:8081/'
     },
       function(accessToken, refreshToken, profile, done) {
 
