@@ -10,7 +10,3 @@ var commentSchema = mongoose.Schema({
 							        Best            : {type: Boolean, default: false },
 });
 module.exports = mongoose.model('Comment', commentSchema);
-
-
-
-//ADD SUBSCHEMA
