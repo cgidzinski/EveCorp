@@ -25,24 +25,41 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
 
-       <!--  <li><a href="/events" id="events">Events</a></li>
-        <li><a href="/info" id="info">Event Info</a></li>
-        <li><a href="/live" id="live">Live Stream</a></li> -->
-
-      </ul>
       <ul class="nav navbar-nav navbar-right">
 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= user.CharacterName %> <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="/profile">Profile</a></li>
+           
 
+
+       
+                        <li><a  href="/dashboard">Dashboard</a></li>
+                        <li><a  href="/wiki">Wiki</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a  href="/timers">Timers</li></a>
+                        <li><a  href="/pings">Recent Pings</li></a>
+                        <li><a  href="/doctrines">Doctrines</li></a>
+                        <li><a  href="/comms">Comms</li></a>
+                        <li><a  href="/market">Market**</li></a>
+                        <li><a  href="/requests">Requests**</li></a>
+                        <li><a  href="/fleets">Fleets**</li></a>
+                        <li><a  href="/forum">Forum</li></a>
+                        <% if (user.CharacterRoleLevel >= 4) { %>
+                         <li role="separator" class="divider"></li>
+                        <li><a  href="/administrative">Administrative</li></a>
+                        <% } %>
+                         <li role="separator" class="divider"></li>
+                        <li><a  href="/profile">Profile</li></a>
+                        <li><a  href="/logout">Logout</li></a>
+
+
+
+
+
+           
             
-
-            <li role="separator" class="divider"></li>
-            <li><a href="/logout">Logout</a></li>
           </ul>
         </li>
       </ul>
